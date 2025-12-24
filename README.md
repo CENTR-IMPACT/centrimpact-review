@@ -11,7 +11,7 @@ project dynamics, cascade effects, and creating publication-ready visualizations
 Based on the CENTR*IMPACT framework, this package quantifies the following critical concepts in community engaged research:
 
 1. Alignment: The shared vision between researchers and partners ($S_a$).
-2. Cascade Effects: The ripple effect of work from direct participants to the third degree of separation (\eqn{S_c}).
+2. Cascade Effects: The ripple effect of work from direct participants to the third degree of separation ($S_c$).
 3. Dynamics: Ways in which the project is carried out modeled on the CBPR framework ($S_d$).
 4. Indicators: "Traditional" markers of academic productivity, such as individuals served, number of outputs, etc.
 
@@ -31,7 +31,7 @@ devtools::install_github("CENTR-IMPACT/centrimpact-review")
 
 ### Project Alignment Score
 
-The Alignment Score (\eqn{S_a}) quantifies the degree of consensus between 
+The Alignment Score ($S_a$) quantifies the degree of consensus between 
 researchers and partners across key project areas such as Goals, Values, Roles, 
 and Resources.
 
@@ -55,7 +55,7 @@ plot_abacus <- visualize_abacus(alignment_results)
 
 ### Cascade Effects Score
 
-The Cascade Effects Score (\eqn{S_c}) quantifies the degree to which information 
+The Cascade Effects Score ($S_c$) quantifies the degree to which information 
 and power is distributed from the core participants across three degrees. This 
 analysis is based on social network analysis principles.
 
@@ -76,7 +76,7 @@ plot_cascade <- visualize_cascade(cascade_results)
 
 ### Project Dynamics Score
 
-The Project Dynamics Score (\eqn{S_d}) quantifies the degree to which the various 
+The Project Dynamics Score ($S_d$) quantifies the degree to which the various 
 aspects of a community engaged research project as outlined by the Community Based 
 Participatory Research framework (Wallerstein & Duran, 2010; Wallerstein et al., 2020).
 
