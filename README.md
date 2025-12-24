@@ -78,7 +78,7 @@ plot_cascade <- visualize_cascade(cascade_results)
 
 The Project Dynamics Score (\eqn{S_d}) quantifies the degree to which the various 
 aspects of a community engaged research project as outlined by the Community Based 
-Participatory Research framework.
+Participatory Research framework (Wallerstein & Duran, 2010; Wallerstein et al., 2020).
 
 The Project Dynamics can be visualized as a rose chart.
 
@@ -119,38 +119,24 @@ plot_indicators <- visualize_indicators(indicators_data)
 All visualizations created with `centrimpact` return `ggplot2` objects. This allows
 for further customization (colors, fonts, etc.) using standard `ggplot2` functions.
 
-## Citation
+## Citing the CEnTR*IMPACT Framework
 
-If you use `centrimpact` in your research, please cite it as:
+If you wish to cite the CEnTR*IMPACT framework in your research, please use the following reference:
 
-> Price, J. F. (2025). centrimpact: Supporting the Analysis and Visualization of Community Engaged Research Metrics (Version 1.0.0) [R package]. https://github.com/CENTRIMPACT/centrimpact-far
-
-A BibTeX entry for LaTeX users is:
-
-```bibtex
-@Manual{,
-  title = {centrimpact: Supporting the Analysis and Visualization of Community Engaged Research Metrics},
-  author = {Jeremy F. Price},
-  year = {2025},
-  note = {R package version 1.0.0},
-  url = {[https://github.com/CENTRIMPACT/centrimpact-far](https://github.com/CENTRIMPACT/centrimpact-far)},
-}
-
-If you wish to cite the CEnTR*IMPACT framework specifically:
-
-> Price, Jeremy F. (2025). "CEnTR*IMPACT: Community Engaged and Transformative Research: Inclusive Measurement of Projects And Community Transformation." https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and Transformative Research – Inclusive Measurement of Projects & Community Transformation*
+(CUMU-Collaboratory Fellowship Report). Coalition of Urban and Metropolitan Universities. https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf
 
 ## Acknowledgments
 
-- The CEnTR-IMPACT team
-- Funding agencies and institutions supporting this work
+This work was supported in part by the Coalition of Urban and Metropolitan Universities (CUMU) and 
+The Collaboratory Research Fellowship Program.
 
-## How to Cite
+## References
 
-If you use this software, please cite:
+Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and Transformative Research – Inclusive Measurement of Projects & Community Transformation*
+(CUMU-Collaboratory Fellowship Report). Coalition of Urban and Metropolitan Universities. https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf
 
-**Price, Jeremy F. (2025). "CEnTR*IMPACT: Community Engaged and Transformative Research: Inclusive Measurement of Projects And Community Transformation." Zenodo. [https://doi.org/10.5281/zenodo.15933384](https://doi.org/10.5281/zenodo.15933384)**
+Wallerstein, N., & Duran, B. (2010). Community-Based Participatory Research Contributions to Intervention Research: The Intersection of Science and Practice to Improve Health Equity. *American Journal of Public Health*, 100(S1), S40–S46. 10.2105/AJPH.2009.184036
+
+Wallerstein, N., et al. (2020). Engage for Equity: A Long-Term Study of Community-Based Participatory Research and Community-Engaged Research Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390. 10.1177/1090198119897075
+
