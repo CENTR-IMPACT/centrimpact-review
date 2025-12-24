@@ -55,13 +55,13 @@ others.
 **The Scoring Process:**
 
 1.  **Dimension Scoring:** Calculated as the geometric mean of weight
-    and salience. \$\$Score\_{dim} = \sqrt{Weight \times Salience}\$\$
+    and salience. \\Score\_{dim} = \sqrt{Weight \times Salience}\\
 
 2.  **Domain Scoring:** Aggregates dimension scores within each domain
     using the geometric mean.
 
 3.  **Dynamics Scoring:** Calculated based on the inequality of domain
-    scores. \$\$S_d = 1 - Gini(Score\_{domains})\$\$
+    scores. \\S_d = 1 - Gini(Score\_{domains})\\
 
 **Dynamics Score Interpretation:** The following rule of thumb (Haddad
 et al., 2024; Wang et al., 2020) is used to interpret the Dynamics Score

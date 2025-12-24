@@ -13,14 +13,10 @@
 #' equilibrium across its various dimensions, rather than over-indexing on just one
 #' area at the expense of others.
 #'
-#' \strong{The Scoring Process:}
-#' \enumerate{
-#'   \item \strong{Dimension Scoring:} Calculated as the geometric mean of weight and salience.
-#'   \deqn{Score_{dim} = \sqrt{Weight \times Salience}}
-#'   \item \strong{Domain Scoring:} Aggregates dimension scores within each domain using the geometric mean.
-#'   \item \strong{Dynamics Scoring:} Calculated based on the inequality of domain scores.
-#'   \deqn{S_d = 1 - Gini(Score_{domains})}
-#' }
+#' **The Scoring Process:**
+#'   1. **Dimension Scoring:** Calculated as the geometric mean of weight and salience. \eqn{Score_{dim} = \sqrt{Weight \times Salience}}
+#'   2. **Domain Scoring:** Aggregates dimension scores within each domain using the geometric mean.
+#'   3. **Dynamics Scoring:** Calculated based on the inequality of domain scores. \eqn{S_d = 1 - Gini(Score_{domains})}
 #'
 #' \strong{Dynamics Score Interpretation:}
 #' The following rule of thumb (Haddad et al., 2024; Wang et al., 2020) is used to interpret the Dynamics Score (\eqn{S_d}):
