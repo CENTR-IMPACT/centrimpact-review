@@ -11,8 +11,8 @@ The `centrimpact` R package provides a comprehensive toolkit for analyzing and v
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/CENTRIMPACT/centrimpact-review}
-  \item Report bugs at \url{https://github.com/CENTRIMPACT/centrimpact-review/issues}
+  \item \url{https://github.com/CENTR-IMPACT/centrimpact-review}
+  \item Report bugs at \url{https://github.com/CENTR-IMPACT/centrimpact-review/issues}
 }
 
 }

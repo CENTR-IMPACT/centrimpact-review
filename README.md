@@ -10,9 +10,9 @@ project dynamics, cascade effects, and creating publication-ready visualizations
 
 Based on the CENTR*IMPACT framework, this package quantifies the following critical concepts in community engaged research:
 
-1. Alignment: The shared vision between researchers and partners (\eqn{S_a}).
+1. Alignment: The shared vision between researchers and partners ($S_a$).
 2. Cascade Effects: The ripple effect of work from direct participants to the third degree of separation (\eqn{S_c}).
-3. Dynamics: Ways in which the project is carried out modeled on the CBPR framework (\eqn{S_d}).
+3. Dynamics: Ways in which the project is carried out modeled on the CBPR framework ($S_d$).
 4. Indicators: "Traditional" markers of academic productivity, such as individuals served, number of outputs, etc.
 
 ## Installation
@@ -24,7 +24,7 @@ You can install this review version of `centrimpact` from GitHub with:
 if (!require("devtools")) install.packages("devtools")
 
 # Install centrimpact
-devtools::install_github("CENTR-IMPACT/centrimpact-far")
+devtools::install_github("CENTR-IMPACT/centrimpact-review")
 ```
 
 ## Usage

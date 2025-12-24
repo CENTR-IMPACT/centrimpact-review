@@ -123,8 +123,8 @@ Quality of Life Outcomes*, 18(1), 111.
 
 ## See also
 
-[`generate_cascade_data`](generate_cascade_data.md) to simulate the
-network data used in these examples.
+[`generate_cascade_data`](https://centr-impact.github.io/centrimpact-review/reference/generate_cascade_data.md)
+to simulate the network data used in these examples.
 
 ## Examples
 

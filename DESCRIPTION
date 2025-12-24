@@ -34,6 +34,7 @@ Imports:
     utils
 Suggests:
     testthat (>= 3.0.0)
-URL: https://github.com/CENTRIMPACT/centrimpact-review
-BugReports: https://github.com/CENTRIMPACT/centrimpact-review/issues
+URL: https://github.com/centr-impact/centrimpact-review, 
+     https://centr-impact.github.io/centrimpact-review/
+BugReports: https://github.com/CENTR-IMPACT/centrimpact-review/issues
 Roxygen: list(markdown = TRUE)

@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/CENTRIMPACT/centrimpact-review/blob/HEAD/inst/CITATION)
+[`inst/CITATION`](https://github.com/CENTR-IMPACT/centrimpact-review/blob/HEAD/inst/CITATION)
 
 Price, J. F. (2025). centrimpact: Supporting the Analysis and
 Visualization of Community Engaged Research Metrics (Version 1.0.0) \[R
@@ -19,5 +19,5 @@ package\]. https://github.com/CENTRIMPACT/centrimpact-far
       author = {Jeremy F. Price},
       year = {2025},
       version = {1.0.0},
-      url = {https://github.com/CENTRIMPACT/centrimpact-far},
+      url = {https://github.com/CENTR-IMPACT/centrimpact-review},
     }

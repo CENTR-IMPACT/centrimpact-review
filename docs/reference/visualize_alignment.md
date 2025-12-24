@@ -20,7 +20,7 @@ visualize_alignment(
 - analysis_object:
 
   An object of class `alignment_analysis` produced by
-  [`analyze_alignment`](analyze_alignment.md).
+  [`analyze_alignment`](https://centr-impact.github.io/centrimpact-review/reference/analyze_alignment.md).
 
 - project_title:
 

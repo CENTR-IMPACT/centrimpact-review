@@ -10,10 +10,10 @@ effects, and creating publication-ready visualizations.
 
 Useful links:
 
-- <https://github.com/CENTRIMPACT/centrimpact-review>
+- <https://github.com/CENTR-IMPACT/centrimpact-review>
 
 - Report bugs at
-  <https://github.com/CENTRIMPACT/centrimpact-review/issues>
+  <https://github.com/CENTR-IMPACT/centrimpact-review/issues>
 
 ## Author
 

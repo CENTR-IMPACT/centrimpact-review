@@ -30,7 +30,7 @@ You can install this review version of `centrimpact` from GitHub with:
 if (!require("devtools")) install.packages("devtools")
 
 # Install centrimpact
-devtools::install_github("CENTR-IMPACT/centrimpact-far")
+devtools::install_github("CENTR-IMPACT/centrimpact-review")
 ```
 
 ## Usage

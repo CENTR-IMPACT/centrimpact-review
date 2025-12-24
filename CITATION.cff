@@ -3,7 +3,7 @@ message: "If you use this software, please cite it as below."
 title: "centrimpact: Supporting the Analysis and Visualization of Community Engaged Research Metrics"
 version: 1.0.0
 date-released: 2025-12-24
-url: "https://github.com/CENTRIMPACT/centrimpact-far"
+url: "https://github.com/CENTR-IMPACT/centrimpact-review"
 authors:
   - family-names: "Price"
     given-names: "Jeremy F."
