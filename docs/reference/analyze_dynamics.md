@@ -3,7 +3,7 @@
 Implements the "Dynamics" component of the CEnTR\*IMPACT framework
 (Price, 2024). This function processes multidimensional assessment data
 to calculate domain-level scores using geometric means and computes a
-"Balance Score" (\$S_d\$) using the Gini coefficient. It is designed to
+"Balance Score" (\\S_d\\) using the Gini coefficient. It is designed to
 measure the equitable distribution of effort and impact across the core
 domains of the CBPR Framework (Wallerstein & Duran, 2010; Wallerstein,
 et al., 2020).
@@ -26,11 +26,11 @@ analyze_dynamics(dynamics_df)
   - `dimension`: Character or Factor. The specific metric (e.g.,
     "Trust").
 
-  - `salience`: Numeric. The importance of the dimension. Must be \$0 \<
-    x 1\$.
+  - `salience`: Numeric. The importance of the dimension. Must be \\0 \<
+    x \le 1\\.
 
-  - `weight`: Numeric. The observed intensity or presence. Must be \$0
-    \< x 1\$.
+  - `weight`: Numeric. The observed intensity or presence. Must be \\0
+    \< x \le 1\\.
 
 ## Value
 
@@ -42,7 +42,7 @@ An object of class `dynamics_analysis` containing:
 - `domain_df`: A summary data frame with aggregated scores per domain.
 
 - `dynamics_score`: A single numeric value representing the Balance
-  Score (\$S_d\$), where 1 indicates perfect balance.
+  Score (\\S_d\\), where 1 indicates perfect balance.
 
 ## Details
 
@@ -55,27 +55,27 @@ others.
 **The Scoring Process:**
 
 1.  **Dimension Scoring:** Calculated as the geometric mean of weight
-    and salience. \$\$ Score_dim = Weight Salience \$\$
+    and salience. \$\$Score\_{dim} = \sqrt{Weight \times Salience}\$\$
 
 2.  **Domain Scoring:** Aggregates dimension scores within each domain
     using the geometric mean.
 
 3.  **Dynamics Scoring:** Calculated based on the inequality of domain
-    scores. \$\$ S_d = 1 - Gini(Score_domains) \$\$
+    scores. \$\$S_d = 1 - Gini(Score\_{domains})\$\$
 
 **Dynamics Score Interpretation:** The following rule of thumb (Haddad
 et al., 2024; Wang et al., 2020) is used to interpret the Dynamics Score
-(\$S_d\$):
+(\\S_d\\):
 
-- \$S_d \< 0.5\$: **Very Low Balance**
+- \\S_d \< 0.5\\: **Very Low Balance**
 
-- \$0.50 S_d \< 0.59\$: **Low Balance**
+- \\0.50 \le S_d \< 0.59\\: **Low Balance**
 
-- \$0.60 S_d \< 0.69\$: **Moderate Balance**
+- \\0.60 \le S_d \< 0.69\\: **Moderate Balance**
 
-- \$0.70 S_d 0.79\$: **High Balance**
+- \\0.70 \le S_d \le 0.79\\: **High Balance**
 
-- \$S_d 0.80\$: **Very High Balance**
+- \\S_d \ge 0.80\\: **Very High Balance**
 
 **Handling Missing Data:** The function is permissive with partial
 datasets. If a domain is included in the input but contains `NA` values

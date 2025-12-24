@@ -1,4 +1,4 @@
-# centrimpact <img src="man/figures/centr-impact-logo.png" align="right" height="138" />
+# centrimpact <img src="man/figures/centr-impact-logo.png" align="right" height="138" alt="CEnTR*IMPACT Logo" />
 
 ## Overview
 

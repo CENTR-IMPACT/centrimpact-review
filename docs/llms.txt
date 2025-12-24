@@ -1,4 +1,4 @@
-# centrimpact ![](reference/figures/centr-impact-logo.png)
+# centrimpact ![CEnTR\*IMPACT Logo](reference/figures/centr-impact-logo.png)
 
 ## Overview
 

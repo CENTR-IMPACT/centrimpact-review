@@ -11,8 +11,8 @@ analyze_dynamics(dynamics_df)
 \itemize{
 \item \code{domain}: Character or Factor. The broader category (e.g., "Partnerships").
 \item \code{dimension}: Character or Factor. The specific metric (e.g., "Trust").
-\item \code{salience}: Numeric. The importance of the dimension. Must be $0 < x \le 1$.
-\item \code{weight}: Numeric. The observed intensity or presence. Must be $0 < x \le 1$.
+\item \code{salience}: Numeric. The importance of the dimension. Must be \eqn{0 < x \le 1}.
+\item \code{weight}: Numeric. The observed intensity or presence. Must be \eqn{0 < x \le 1}.
 }}
 }
 \value{
@@ -20,13 +20,13 @@ An object of class \code{dynamics_analysis} containing:
 \itemize{
 \item \code{dynamics_df}: The processed input data frame with added \code{dimension_score}.
 \item \code{domain_df}: A summary data frame with aggregated scores per domain.
-\item \code{dynamics_score}: A single numeric value representing the Balance Score ($S_d$), where 1 indicates perfect balance.
+\item \code{dynamics_score}: A single numeric value representing the Balance Score (\eqn{S_d}), where 1 indicates perfect balance.
 }
 }
 \description{
 Implements the "Dynamics" component of the CEnTR*IMPACT framework (Price, 2024).
 This function processes multidimensional assessment data to calculate domain-level
-scores using geometric means and computes a "Balance Score" ($S_d$) using the
+scores using geometric means and computes a "Balance Score" (\eqn{S_d}) using the
 Gini coefficient. It is designed to measure the equitable distribution of effort
 and impact across the core domains of the CBPR Framework (Wallerstein & Duran, 2010; Wallerstein, et al., 2020).
 }
@@ -39,20 +39,20 @@ area at the expense of others.
 \strong{The Scoring Process:}
 \enumerate{
 \item \strong{Dimension Scoring:} Calculated as the geometric mean of weight and salience.
-$$ Score_{dim} = \sqrt{Weight \times Salience} $$
+\deqn{Score_{dim} = \sqrt{Weight \times Salience}}
 \item \strong{Domain Scoring:} Aggregates dimension scores within each domain using the geometric mean.
 \item \strong{Dynamics Scoring:} Calculated based on the inequality of domain scores.
-$$ S_d = 1 - Gini(Score_{domains}) $$
+\deqn{S_d = 1 - Gini(Score_{domains})}
 }
 
 \strong{Dynamics Score Interpretation:}
-The following rule of thumb (Haddad et al., 2024; Wang et al., 2020) is used to interpret the Dynamics Score ($S_d$):
+The following rule of thumb (Haddad et al., 2024; Wang et al., 2020) is used to interpret the Dynamics Score (\eqn{S_d}):
 \itemize{
-\item $S_d < 0.5$: \strong{Very Low Balance}
-\item $0.50 \le S_d < 0.59$: \strong{Low Balance}
-\item $0.60 \le S_d < 0.69$: \strong{Moderate Balance}
-\item $0.70 \le S_d \le 0.79$: \strong{High Balance}
-\item $S_d \ge 0.80$: \strong{Very High Balance}
+\item \eqn{S_d < 0.5}: \strong{Very Low Balance}
+\item \eqn{0.50 \le S_d < 0.59}: \strong{Low Balance}
+\item \eqn{0.60 \le S_d < 0.69}: \strong{Moderate Balance}
+\item \eqn{0.70 \le S_d \le 0.79}: \strong{High Balance}
+\item \eqn{S_d \ge 0.80}: \strong{Very High Balance}
 }
 
 \strong{Handling Missing Data:}
