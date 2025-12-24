@@ -1,0 +1,156 @@
+# centrimpact <img src="man/figures/centr-impact-logo.png" align="right" height="138" />
+
+## Overview
+
+The `centrimpact` R package provides a comprehensive toolkit for analyzing and 
+visualizing community engaged research metrics as highlighted in the 
+[CEnTR*IMPACT](https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf) 
+framework (Price, 2024). It offers specialized functions for researcher-partner alignment, 
+project dynamics, cascade effects, and creating publication-ready visualizations.
+
+Based on the CENTR*IMPACT framework, this package quantifies the following critical concepts in community engaged research:
+
+1. Alignment: The shared vision between researchers and partners (\eqn{S_a}).
+2. Cascade Effects: The ripple effect of work from direct participants to the third degree of separation (\eqn{S_c}).
+3. Dynamics: Ways in which the project is carried out modeled on the CBPR framework (\eqn{S_d}).
+4. Indicators: "Traditional" markers of academic productivity, such as individuals served, number of outputs, etc.
+
+## Installation
+
+You can install this review version of `centrimpact` from GitHub with:
+
+```r
+# Install devtools if not already installed
+if (!require("devtools")) install.packages("devtools")
+
+# Install centrimpact
+devtools::install_github("CENTR-IMPACT/centrimpact-far")
+```
+
+## Usage
+
+### Project Alignment Score
+
+The Alignment Score (\eqn{S_a}) quantifies the degree of consensus between 
+researchers and partners across key project areas such as Goals, Values, Roles, 
+and Resources.
+
+The Project Alignment can be visualized either with a Slopegraph or an Abacus Plot.
+
+```r
+library(centrimpact)
+
+# Generate example data
+alignment_data <- generate_alignment_data()
+
+# Analyze alignment data
+alignment_results <- analyze_alignment(alignment_data)
+
+# Visualize results with a Slopegraph
+plot_slopegraph <- visualize_alignment(alignment_results)
+
+# Visualize results with an Abacus Plot
+plot_abacus <- visualize_abacus(alignment_results)
+```
+
+### Cascade Effects Score
+
+The Cascade Effects Score (\eqn{S_c}) quantifies the degree to which information 
+and power is distributed from the core participants across three degrees. This 
+analysis is based on social network analysis principles.
+
+The Cascade Effects can be visualized as a radial bar chart or "racetrack plot."
+
+```r
+library(centrimpact)
+
+# Generate example data
+cascade_data <- generate_cascade_data()
+
+# Analyze alignment data
+cascade_results <- analyze_cascade(cascade_data)
+
+# Visualize results
+plot_cascade <- visualize_cascade(cascade_results)
+```
+
+### Project Dynamics Score
+
+The Project Dynamics Score (\eqn{S_d}) quantifies the degree to which the various 
+aspects of a community engaged research project as outlined by the Community Based 
+Participatory Research framework.
+
+The Project Dynamics can be visualized as a rose chart.
+
+```r
+library(centrimpact)
+
+# Generate example data
+dynamics_data <- generate_dynamics_data()
+
+# Analyze alignment data
+dynamics_results <- analyze_dynamics(dynamics_data)
+
+# Visualize results
+plot_dynamics <- visualize_dynamics(dynamics_results)
+```
+
+### Project Indicators
+
+The Project Indicators are more traditional academic indicators such as individuals 
+served, outputs generated, outcomes met, etc. These provide the typical "how many" 
+metrics often reported in faculty reviews and final reports.
+
+The Project Indicators can be visualized as a horizontal bubble chart. No separate 
+analysis function is needed as these are direct counts.
+
+```r
+library(centrimpact)
+
+# Generate example data
+indicators_data <- generate_indicators_data()
+
+# Visualize results
+plot_indicators <- visualize_indicators(indicators_data)
+```
+
+## Styling Plots
+
+All visualizations created with `centrimpact` return `ggplot2` objects. This allows
+for further customization (colors, fonts, etc.) using standard `ggplot2` functions.
+
+## Citation
+
+If you use `centrimpact` in your research, please cite it as:
+
+> Price, J. F. (2025). centrimpact: Supporting the Analysis and Visualization of Community Engaged Research Metrics (Version 1.0.0) [R package]. https://github.com/CENTRIMPACT/centrimpact-far
+
+A BibTeX entry for LaTeX users is:
+
+```bibtex
+@Manual{,
+  title = {centrimpact: Supporting the Analysis and Visualization of Community Engaged Research Metrics},
+  author = {Jeremy F. Price},
+  year = {2025},
+  note = {R package version 1.0.0},
+  url = {[https://github.com/CENTRIMPACT/centrimpact-far](https://github.com/CENTRIMPACT/centrimpact-far)},
+}
+
+If you wish to cite the CEnTR*IMPACT framework specifically:
+
+> Price, Jeremy F. (2025). "CEnTR*IMPACT: Community Engaged and Transformative Research: Inclusive Measurement of Projects And Community Transformation." https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- The CEnTR-IMPACT team
+- Funding agencies and institutions supporting this work
+
+## How to Cite
+
+If you use this software, please cite:
+
+**Price, Jeremy F. (2025). "CEnTR*IMPACT: Community Engaged and Transformative Research: Inclusive Measurement of Projects And Community Transformation." Zenodo. [https://doi.org/10.5281/zenodo.15933384](https://doi.org/10.5281/zenodo.15933384)**
