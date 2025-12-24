@@ -20,6 +20,8 @@
 
 # RStudio files
 .Rproj.user/
+*.Rproj
+_pkgdown.yml
 
 # produced vignettes
 vignettes/*.html
