@@ -1,0 +1,195 @@
+# centrimpact ![](reference/figures/centr-impact-logo.png)
+
+## Overview
+
+The `centrimpact` R package provides a comprehensive toolkit for
+analyzing and visualizing community engaged research metrics as
+highlighted in the
+[CEnTR\*IMPACT](https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf)
+framework (Price, 2024). It offers specialized functions for
+researcher-partner alignment, project dynamics, cascade effects, and
+creating publication-ready visualizations.
+
+Based on the CENTR\*IMPACT framework, this package quantifies the
+following critical concepts in community engaged research:
+
+1.  Alignment: The shared vision between researchers and partners ().
+2.  Cascade Effects: The ripple effect of work from direct participants
+    to the third degree of separation ().
+3.  Dynamics: Ways in which the project is carried out modeled on the
+    CBPR framework ().
+4.  Indicators: “Traditional” markers of academic productivity, such as
+    individuals served, number of outputs, etc.
+
+## Installation
+
+You can install this review version of `centrimpact` from GitHub with:
+
+``` r
+# Install devtools if not already installed
+if (!require("devtools")) install.packages("devtools")
+
+# Install centrimpact
+devtools::install_github("CENTR-IMPACT/centrimpact-far")
+```
+
+## Usage
+
+### Project Alignment Score
+
+The Alignment Score () quantifies the degree of consensus between
+researchers and partners across key project areas such as Goals, Values,
+Roles, and Resources.
+
+The Project Alignment can be visualized either with a Slopegraph or an
+Abacus Plot.
+
+``` r
+library(centrimpact)
+
+# Generate example data
+alignment_data <- generate_alignment_data()
+
+# Analyze alignment data
+alignment_results <- analyze_alignment(alignment_data)
+
+# Visualize results with a Slopegraph
+plot_slopegraph <- visualize_alignment(alignment_results)
+
+# Visualize results with an Abacus Plot
+plot_abacus <- visualize_abacus(alignment_results)
+```
+
+### Cascade Effects Score
+
+The Cascade Effects Score () quantifies the degree to which information
+and power is distributed from the core participants across three
+degrees. This analysis is based on social network analysis principles.
+
+The Cascade Effects can be visualized as a radial bar chart or
+“racetrack plot.”
+
+``` r
+library(centrimpact)
+
+# Generate example data
+cascade_data <- generate_cascade_data()
+
+# Analyze alignment data
+cascade_results <- analyze_cascade(cascade_data)
+
+# Visualize results
+plot_cascade <- visualize_cascade(cascade_results)
+```
+
+### Project Dynamics Score
+
+The Project Dynamics Score () quantifies the degree to which the various
+aspects of a community engaged research project as outlined by the
+Community Based Participatory Research framework (Wallerstein & Duran,
+2010; Wallerstein et al., 2020).
+
+The Project Dynamics can be visualized as a rose chart.
+
+``` r
+library(centrimpact)
+
+# Generate example data
+dynamics_data <- generate_dynamics_data()
+
+# Analyze alignment data
+dynamics_results <- analyze_dynamics(dynamics_data)
+
+# Visualize results
+plot_dynamics <- visualize_dynamics(dynamics_results)
+```
+
+### Project Indicators
+
+The Project Indicators are more traditional academic indicators such as
+individuals served, outputs generated, outcomes met, etc. These provide
+the typical “how many” metrics often reported in faculty reviews and
+final reports.
+
+The Project Indicators can be visualized as a horizontal bubble chart.
+No separate analysis function is needed as these are direct counts.
+
+``` r
+library(centrimpact)
+
+# Generate example data
+indicators_data <- generate_indicators_data()
+
+# Visualize results
+plot_indicators <- visualize_indicators(indicators_data)
+```
+
+## Styling Plots
+
+All visualizations created with `centrimpact` return `ggplot2` objects.
+This allows for further customization (colors, fonts, etc.) using
+standard `ggplot2` functions.
+
+## Citing the CEnTR\*IMPACT Framework
+
+If you wish to cite the CEnTR\*IMPACT framework in your research, please
+use the following reference:
+
+Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and
+Transformative Research – Inclusive Measurement of Projects & Community
+Transformation* (CUMU-Collaboratory Fellowship Report). Coalition of
+Urban and Metropolitan Universities.
+<https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf>
+
+## Acknowledgments
+
+This work was supported in part by the Coalition of Urban and
+Metropolitan Universities (CUMU) and The Collaboratory Research
+Fellowship Program.
+
+## References
+
+Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and
+Transformative Research – Inclusive Measurement of Projects & Community
+Transformation* (CUMU-Collaboratory Fellowship Report). Coalition of
+Urban and Metropolitan Universities.
+<https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf>
+
+Wallerstein, N., & Duran, B. (2010). Community-Based Participatory
+Research Contributions to Intervention Research: The Intersection of
+Science and Practice to Improve Health Equity. *American Journal of
+Public Health*, 100(S1), S40–S46. 10.2105/AJPH.2009.184036
+
+Wallerstein, N., et al. (2020). Engage for Equity: A Long-Term Study of
+Community-Based Participatory Research and Community-Engaged Research
+Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390.
+10.1177/1090198119897075
+
+# Package index
+
+## All functions
+
+- [`analyze_alignment()`](analyze_alignment.md) : Calculate Alignment
+  Scores
+- [`analyze_cascade()`](analyze_cascade.md) : Analyze Project Cascade
+  Effects
+- [`analyze_dynamics()`](analyze_dynamics.md) : Analyze Project Dynamics
+- [`generate_alignment_data()`](generate_alignment_data.md) : Generate
+  Alignment Data
+- [`generate_cascade_data()`](generate_cascade_data.md) : Generate
+  Cascade Data
+- [`generate_dynamics_data()`](generate_dynamics_data.md) : Generate
+  Project Dynamics Data
+- [`generate_indicators_data()`](generate_indicators_data.md) : Generate
+  Indicators Data
+- [`visualize_abacus()`](visualize_abacus.md) : Visualize
+  Researcher-Partner Alignment (Abacus Plot)
+- [`visualize_alignment()`](visualize_alignment.md) : Visualize Rater
+  Alignment (Slopegraph)
+- [`visualize_cascade()`](visualize_cascade.md) : Visualize Cascade
+  (Ripple) Effects
+- [`visualize_dynamics()`](visualize_dynamics.md) : Visualize Dynamics
+  (Rose Diagram)
+- [`visualize_indicators()`](visualize_indicators.md) : Visualize
+  Project Indicators
+
