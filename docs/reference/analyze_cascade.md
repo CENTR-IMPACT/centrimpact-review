@@ -4,8 +4,7 @@ Performs a comprehensive analysis of a network's "Cascade" structure to
 measure localized influence. Based on the theory that direct personal
 influence typically extends to "three degrees of impact" (Christakis &
 Fowler, 2009), this function examines potential cascading effects across
-these layers using the formula: \$\$I = \gamma (\alpha L + \beta G) +
-\lambda T\$\$
+these layers.
 
 ## Usage
 
@@ -23,8 +22,8 @@ analyze_cascade(network_df, alpha_parameter = 0.9)
 
   - `to`: Target node identifier.
 
-  - `layer`: Integer (1-4). The "degree" of the interaction (1 = Core, 2
-    = Partners, 3 = Community, 4 = Distant).
+  - `layer`: Integer (1-3). The "degree" of the interaction (1 = Core, 2
+    = Community, 3 = Distant).
 
 - alpha_parameter:
 
@@ -83,10 +82,32 @@ network's periphery and accessibility.
 - *Interpretation:* High scores indicate an inclusive network with
   reduced barriers.
 
-**Cascade Score Interpretation:** The "Cascade Balance Score" (\\S_c\\)
-is calculated using the inverse Gini coefficient of layer-level scores
-to determine if influence is effectively distributed across the "three
-degrees" or concentrated at the top.
+**The Scoring Process:**
+
+1.  **Layer (Degree) Scoring:** For each network layer (degree of
+    separation), influence is calculated by combining local cohesion
+    (Knitting + Bridging), global flow (Channeling), and peripheral
+    access (Reaching): \$\$s\_{\text{layer}} = \gamma(\alpha L +
+    \beta G) + \lambda T\$\$ where \\L\\ represents combined Knitting
+    and Bridging scores, \\G\\ represents Channeling score, \\T\\
+    represents Reaching score, and weights are:
+
+    - \\\alpha = 0.4\\ (local cohesion weight)
+
+    - \\\beta = 0.3\\ (global flow weight)
+
+    - \\\lambda = 0.3\\ (peripheral access weight)
+
+    - \\\gamma\\ varies by layer: 0.9 (Layer 1), 0.5 (Layer 2), 0.45
+      (Layer 3)
+
+2.  **Cascade Balance Score:** Calculated based on the equality of layer
+    scores. \$\$S\_{c} = 1 -
+    \operatorname{Gini}(\\s\_{\text{layer},k}\\)\$\$ where
+    \\\\s\_{\text{layer},k}\\\\ represents the set of all layer
+    influence scores.
+
+**Cascade Balance Interpretation:**
 
 - \\S_c \< 0.50\\: **Very Low Balance** (Core-dominated)
 

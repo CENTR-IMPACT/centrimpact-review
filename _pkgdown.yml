@@ -1,6 +1,5 @@
 url: https://centr-impact.github.io/centrimpact-review/
 template:
   bootstrap: 5
-  params:
-    mathjax: true
+  math-rendering: mathjax
 

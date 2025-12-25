@@ -82,11 +82,5 @@ p <- visualize_abacus(results, project_title = "Partnership Alignment")
 
 # 3. Display the plot
 print(p)
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_point()`).
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_point()`).
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_point()`).
 
 ```

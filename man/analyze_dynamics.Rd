@@ -38,9 +38,12 @@ area at the expense of others.
 
 \strong{The Scoring Process:}
 \enumerate{
-\item \strong{Dimension Scoring:} Calculated as the geometric mean of weight and salience. \eqn{Score_{dim} = \sqrt{Weight \times Salience}}
-\item \strong{Domain Scoring:} Aggregates dimension scores within each domain using the geometric mean.
-\item \strong{Dynamics Scoring:} Calculated based on the inequality of domain scores. \eqn{S_d = 1 - Gini(Score_{domains})}
+\item \strong{Dimension Scoring:} For each descriptor, weight (\eqn{w_j}) is multiplied by Smith's salience index (\eqn{s_j}). The dimension score is the geometric mean across all descriptors.
+\deqn{s_{\text{dimension}} = \left(\prod_{j=1}^{n} (w_j \times s_j)\right)^{1/n}}
+\item \strong{Domain Scoring:} Aggregates dimension scores within each domain using the geometric mean across all dimensions in the domain.
+\deqn{s_{\text{domain}} = \left(\prod_{i=1}^{m} s_{\text{dimension},i}\right)^{1/m}}
+\item \strong{Dynamics Scoring:} Calculated based on the inequality of all domain scores.
+\deqn{S_{d} = 1 - \operatorname{Gini}(\{s_{\text{domain},k}\})}
 }
 
 \strong{Dynamics Score Interpretation:}
@@ -73,11 +76,6 @@ print(result$dynamics_score)
 
 # 4. Inspect the domain-level scores
 print(result$domain_df)
-
-# 5. Example with high-variance data (to show lower balance)
-df_unbalanced <- generate_dynamics_data(seed = 123, domain_variance = TRUE)
-result_unbalanced <- analyze_dynamics(df_unbalanced)
-print(result_unbalanced$dynamics_score)
 
 }
 \references{

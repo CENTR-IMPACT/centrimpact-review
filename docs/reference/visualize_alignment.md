@@ -80,11 +80,5 @@ p <- visualize_alignment(results, project_title = "Year 1 Alignment")
 
 # 3. Display the plot
 print(p)
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_line()`).
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_point()`).
-#> Warning: Removed 1 row containing missing values or values outside the scale range
-#> (`geom_text_repel()`).
 
 ```

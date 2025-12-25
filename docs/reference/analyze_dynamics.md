@@ -54,14 +54,20 @@ others.
 
 **The Scoring Process:**
 
-1.  **Dimension Scoring:** Calculated as the geometric mean of weight
-    and salience. \\Score\_{dim} = \sqrt{Weight \times Salience}\\
+1.  **Dimension Scoring:** For each descriptor, weight (\\w_j\\) is
+    multiplied by Smith's salience index (\\s_j\\). The dimension score
+    is the geometric mean across all descriptors.
+    \$\$s\_{\text{dimension}} = \left(\prod\_{j=1}^{n} (w_j \times
+    s_j)\right)^{1/n}\$\$
 
 2.  **Domain Scoring:** Aggregates dimension scores within each domain
-    using the geometric mean.
+    using the geometric mean across all dimensions in the domain.
+    \$\$s\_{\text{domain}} = \left(\prod\_{i=1}^{m}
+    s\_{\text{dimension},i}\right)^{1/m}\$\$
 
-3.  **Dynamics Scoring:** Calculated based on the inequality of domain
-    scores. \\S_d = 1 - Gini(Score\_{domains})\\
+3.  **Dynamics Scoring:** Calculated based on the inequality of all
+    domain scores. \$\$S\_{d} = 1 -
+    \operatorname{Gini}(\\s\_{\text{domain},k}\\)\$\$
 
 **Dynamics Score Interpretation:** The following rule of thumb (Haddad
 et al., 2024; Wang et al., 2020) is used to interpret the Dynamics Score
@@ -137,10 +143,4 @@ print(result$domain_df)
 #> 3 Research             0.44
 #> 4 Learning             0.46
 #> 5 Outcomes             0.4 
-
-# 5. Example with high-variance data (to show lower balance)
-df_unbalanced <- generate_dynamics_data(seed = 123, domain_variance = TRUE)
-result_unbalanced <- analyze_dynamics(df_unbalanced)
-print(result_unbalanced$dynamics_score)
-#> [1] 0.9291139
 ```

@@ -11,7 +11,7 @@ analyze_cascade(network_df, alpha_parameter = 0.9)
 \itemize{
 \item \code{from}: Source node identifier.
 \item \code{to}: Target node identifier.
-\item \code{layer}: Integer (1-4). The "degree" of the interaction (1 = Core, 2 = Partners, 3 = Community, 4 = Distant).
+\item \code{layer}: Integer (1-3). The "degree" of the interaction (1 = Core, 2 = Community, 3 = Distant).
 }}
 
 \item{alpha_parameter}{Numeric. Damping factor for Alpha Centrality (defaults to 0.9).}
@@ -29,8 +29,7 @@ An object of class \code{cascade_analysis} containing:
 Performs a comprehensive analysis of a network's "Cascade" structure to measure
 localized influence. Based on the theory that direct personal influence typically
 extends to "three degrees of impact" (Christakis & Fowler, 2009), this function
-examines potential cascading effects across these layers using the formula:
-\deqn{I = \gamma (\alpha L + \beta G) + \lambda T}
+examines potential cascading effects across these layers.
 }
 \details{
 \strong{Theoretical Foundation:}
@@ -70,10 +69,26 @@ Measures the extent of the network's periphery and accessibility.
 \item \emph{Interpretation:} High scores indicate an inclusive network with reduced barriers.
 }
 
-\strong{Cascade Score Interpretation:}
-The "Cascade Balance Score" (\eqn{S_c}) is calculated using the inverse Gini coefficient
-of layer-level scores to determine if influence is effectively distributed across
-the "three degrees" or concentrated at the top.
+\strong{The Scoring Process:}
+\enumerate{
+\item \strong{Layer (Degree) Scoring:} For each network layer (degree of separation),
+influence is calculated by combining local cohesion (Knitting + Bridging),
+global flow (Channeling), and peripheral access (Reaching):
+\deqn{s_{\text{layer}} = \gamma(\alpha L + \beta G) + \lambda T}
+where \eqn{L} represents combined Knitting and Bridging scores, \eqn{G} represents
+Channeling score, \eqn{T} represents Reaching score, and weights are:
+\itemize{
+\item \eqn{\alpha = 0.4} (local cohesion weight)
+\item \eqn{\beta = 0.3} (global flow weight)
+\item \eqn{\lambda = 0.3} (peripheral access weight)
+\item \eqn{\gamma} varies by layer: 0.9 (Layer 1), 0.5 (Layer 2), 0.45 (Layer 3)
+}
+\item \strong{Cascade Balance Score:} Calculated based on the equality of layer scores.
+\deqn{S_{c} = 1 - \operatorname{Gini}(\{s_{\text{layer},k}\})}
+where \eqn{\{s_{\text{layer},k}\}} represents the set of all layer influence scores.
+}
+
+\strong{Cascade Balance Interpretation:}
 \itemize{
 \item \eqn{S_c < 0.50}: \strong{Very Low Balance} (Core-dominated)
 \item \eqn{0.50 \le S_c < 0.59}: \strong{Low Balance}
