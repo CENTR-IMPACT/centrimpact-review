@@ -71,7 +71,7 @@
 #' @importFrom readr read_csv
 #' @importFrom dplyr select mutate case_when across all_of starts_with
 #'   ends_with relocate if_else slice_tail
-#' @importFrom tidyr pivot_longer separate_wider_delim
+#' @importFrom tidyr pivot_longer separate_wider_regex
 #' @importFrom stringr str_squish str_remove
 #' @importFrom utils type.convert
 #' @export
@@ -153,10 +153,21 @@ load_survey_data <- function(file, survey = c("main", "alignment")) {
       names_prefix = "dynamics_",
       values_to    = "rating"
     ) |>
-    tidyr::separate_wider_delim(
-      cols  = dynamic,
-      delim = "_",
-      names = c("domain", "dimension", "descriptor")
+    # Use a regex split rather than separate_wider_delim() because Qualtrics
+    # exports use compound dimension names that contain underscores
+    # (e.g. dynamics_p_decision_making_1). The pattern is fixed: a single
+    # letter domain code, a multi-piece dimension, and a 1-5 descriptor digit.
+    # Anchoring on the domain prefix and descriptor suffix lets the dimension
+    # absorb whatever lies between, including underscores.
+    tidyr::separate_wider_regex(
+      cols     = dynamic,
+      patterns = c(
+        domain     = "[a-z]",
+        "_",
+        dimension  = ".+",
+        "_",
+        descriptor = "[1-5]"
+      )
     ) |>
     stats::na.omit() |>
     dplyr::mutate(
