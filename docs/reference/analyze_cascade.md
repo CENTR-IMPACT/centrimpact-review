@@ -1,155 +1,131 @@
-# Analyze Project Cascade Effects
+# Run the Cascade Analysis Pipeline
 
-Performs a comprehensive analysis of a network's "Cascade" structure to
-measure localized influence. Based on the theory that direct personal
-influence typically extends to "three degrees of impact" (Christakis &
-Fowler, 2009), this function examines potential cascading effects across
-these layers.
+High-level entry point for cascade analysis. Accepts raw cascade survey
+parameters directly, estimates the expected network size, and
+automatically routes to either a full exact analysis (when the network
+is tractable) or a scaled stochastic analysis (when the network is too
+large). In scaled mode, multiple stochastic runs are averaged to reduce
+variance from the probabilistic edge generation.
 
 ## Usage
 
 ``` r
-analyze_cascade(network_df, alpha_parameter = 0.9)
+analyze_cascade(
+  cascade_data,
+  max_edges = 2e+06,
+  target_nodes = 500,
+  n_runs = 5,
+  seed = NULL,
+  always_scale = FALSE,
+  keep_runs = FALSE
+)
 ```
 
 ## Arguments
 
-- network_df:
+- cascade_data:
 
-  A data frame representing the edge list. Required columns:
+  A one-row data frame containing the `cascade_*` survey columns (people
+  counts and probability parameters). If a multi-row data frame is
+  supplied (e.g. directly from
+  [`generate_cascade_data()`](https://centr-impact.github.io/centrimpact-review/reference/generate_cascade_data.md)),
+  only the first row is used and a warning is emitted.
 
-  - `from`: Source node identifier.
+- max_edges:
 
-  - `to`: Target node identifier.
+  Maximum expected edge count for exact analysis. Default 2e6. Networks
+  with more expected edges are scaled.
 
-  - `layer`: Integer (1-3). The "degree" of the interaction (1 = Core, 2
-    = Community, 3 = Distant).
+- target_nodes:
 
-- alpha_parameter:
+  Target total node count when scaling is applied. Default 500. Larger
+  values give more accurate results at higher runtime.
 
-  Numeric. Damping factor for Alpha Centrality (defaults to 0.9).
+- n_runs:
+
+  Number of stochastic runs to average in scaled mode. Default 5.
+
+- seed:
+
+  Optional integer seed for reproducibility. In scaled mode, run \\i\\
+  uses `seed + i` so runs are independent but deterministic.
+
+- always_scale:
+
+  Logical. If `TRUE`, force scaled analysis even when the network fits
+  within `max_edges`. Useful for benchmarking. Default `FALSE`.
+
+- keep_runs:
+
+  Logical. If `TRUE`, attach all individual `cascade_analysis` run
+  results to the output as `run_results`. Default `FALSE`.
 
 ## Value
 
-An object of class `cascade_analysis` containing:
+A list of class `"cascade_pipeline"` containing:
 
-- `cascade_score`: The global Balance Score (\\S_c\\, 0-1).
+- `mode`: `"full"` or `"scaled"`.
 
-- `summary`: A summary table aggregating roles by Layer (Degree).
+- `summary`: Mean layer summary table (tibble with `layer_knitting`,
+  `layer_bridging`, `layer_channeling`, `layer_reaching`, `layer_score`,
+  `layer_number`).
 
-- `node_data`: Detailed metrics for every node.
+- `summary_sd`: Per-column SD across runs (`NULL` in full mode).
 
-- `topology_score`: Baseline topological health score.
+- `cascade_score`: Gini-based cascade balance score.
+
+- `estimated_edges`: Expected edge count before any scaling.
+
+- `scale_used`: Scale factor applied (`1` in full mode).
+
+- `n_runs`: Number of runs averaged.
+
+- `node_data`: Per-node metrics (full mode only; `NULL` in scaled mode –
+  use `keep_runs = TRUE` to access individual run node data).
+
+- `run_results`: Individual run results (only present when
+  `keep_runs = TRUE`).
 
 ## Details
 
-**Theoretical Foundation:** Unlike general connectivity metrics, this
-method resembles the work of Long, Cunningham, and Braithwaite (2013),
-examining participants' roles based on the structure of the network
-formed through the research. It assesses how influence ripples outward
-from the core team (Layer 1) to the broader community (Layer 3+).
+**Routing Logic:** The expected edge count is estimated analytically
+from the survey parameters without constructing the network. If it falls
+within `max_edges`, a single full `calculate_cascade(build_network())`
+call is made. Otherwise, the five "people" parameters are scaled down
+proportionally so that the resulting network has approximately
+`target_nodes` total nodes, and `n_runs` independent runs are averaged.
 
-**Operational Definitions:** The function maps Social Network Analysis
-(SNA) metrics to four key influence roles:
+**Scaling Method:** The scale factor \\s\\ is found by solving the cubic
+node-count equation \$\$n_1 s + n_2 s^2 + n_3 s^3 =
+\text{target\\nodes}\$\$ numerically via
+[`uniroot()`](https://rdrr.io/r/stats/uniroot.html), where \\n_1\\,
+\\n_2\\, \\n_3\\ are the unscaled node counts per layer. This preserves
+the L1:L2:L3 ratio and avoids the floor-collapse problem that occurs
+with a fixed multiplier when small counts round to zero. Floors of
+`pmax(2, ...)` are applied to L1 type counts (so the clique remains
+meaningful) and `pmax(1, ...)` to all other counts.
 
-**1. Knitting (Cohesion & Bonding):** Measures how well the network
-strengthens internal bonds within a specific group.
-
-- *Metrics:* Community detection (Walktrap) + Eigenvector Centrality.
-
-- *Interpretation:* High scores indicate a tight-knit, resilient core.
-
-**2. Bridging (Connection & Spanning):** Measures the ability to connect
-otherwise disconnected groups (filling "structural holes").
-
-- *Metrics:* Structural Holes (Constraint) + Betweenness Centrality.
-
-- *Interpretation:* High scores indicate key "brokers" connecting silos.
-
-**3. Channeling (Flow & Transmission):** Measures the efficiency of
-information flow and resource distribution.
-
-- *Metrics:* Local Betweenness + Alpha Centrality.
-
-- *Interpretation:* High scores indicate effective pipelines for moving
-  resources.
-
-**4. Reaching (Access & Inclusion):** Measures the extent of the
-network's periphery and accessibility.
-
-- *Metrics:* Clustering Coefficient + Harmonic Centrality.
-
-- *Interpretation:* High scores indicate an inclusive network with
-  reduced barriers.
-
-**The Scoring Process:**
-
-1.  **Layer (Degree) Scoring:** For each network layer (degree of
-    separation), influence is calculated by combining local cohesion
-    (Knitting + Bridging), global flow (Channeling), and peripheral
-    access (Reaching): \$\$s\_{\text{layer}} = \gamma(\alpha L +
-    \beta G) + \lambda T\$\$ where \\L\\ represents combined Knitting
-    and Bridging scores, \\G\\ represents Channeling score, \\T\\
-    represents Reaching score, and weights are:
-
-    - \\\alpha = 0.4\\ (local cohesion weight)
-
-    - \\\beta = 0.3\\ (global flow weight)
-
-    - \\\lambda = 0.3\\ (peripheral access weight)
-
-    - \\\gamma\\ varies by layer: 0.9 (Layer 1), 0.5 (Layer 2), 0.45
-      (Layer 3)
-
-2.  **Cascade Balance Score:** Calculated based on the equality of layer
-    scores. \$\$S\_{c} = 1 -
-    \operatorname{Gini}(\\s\_{\text{layer},k}\\)\$\$ where
-    \\\\s\_{\text{layer},k}\\\\ represents the set of all layer
-    influence scores.
-
-**Cascade Balance Interpretation:**
-
-- \\S_c \< 0.50\\: **Very Low Balance** (Core-dominated)
-
-- \\0.50 \le S_c \< 0.59\\: **Low Balance**
-
-- \\0.60 \le S_c \< 0.69\\: **Moderate Balance**
-
-- \\0.70 \le S_c \le 0.79\\: **High Balance**
-
-- \\S_c \ge 0.80\\: **Very High Balance** (Equitable distribution)
+**Why average runs?** The probabilistic edges (L2-L2, L3-L3, back-edges)
+introduce stochastic variance. A single scaled run can produce
+misleading scores when the scaled network is small. Averaging `n_runs`
+independent realizations of the same scaled parameters yields stable
+estimates; `summary_sd` quantifies the remaining run-to-run variance.
 
 ## References
 
-Christakis, N. A., & Fowler, J. H. (2009). *Connected: The Surprising
-Power of Our Social Networks and How They Shape Our Lives*. Little,
-Brown Spark.
-
-Haddad, C. N., et al. (2024). *The World Bank's New Inequality
-Indicator*. World Bank.
-[doi:10.1596/41687](https://doi.org/10.1596/41687)
-
-Long, J. C., Cunningham, F. C., & Braithwaite, J. (2013). Bridges,
-brokers and boundary spanners in collaborative networks: a systematic
-review. *BMC Health Services Research*, 13, 158.
-[doi:10.1186/1472-6963-13-158](https://doi.org/10.1186/1472-6963-13-158)
-
-Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and
-Transformative Research – Inclusive Measurement of Projects & Community
-Transformation*. CUMU.
-
-Wang, H.-Y., et al. (2020). Comparison of Ferguson’s delta and the Gini
-coefficient used for measuring the inequality of data. *Health and
-Quality of Life Outcomes*, 18(1), 111.
+Leng, Y., et al. (2018). The rippling effect of social influence via
+phone communication network. In *Complex Spreading Phenomena in Social
+Systems* (pp. 323-333). Springer.
 
 ## See also
 
-[`generate_cascade_data`](https://centr-impact.github.io/centrimpact-review/reference/generate_cascade_data.md)
-to simulate the network data used in these examples.
+[`calculate_cascade`](https://centr-impact.github.io/centrimpact-review/reference/calculate_cascade.md)
+for the underlying network analysis function.
 
 ## Examples
 
 ``` r
+if (FALSE) { # \dontrun{
 # 1. Generate a synthetic 3-layer network
 # This simulates Core (L1) -> Partner (L2) -> Community (L3) flow
 network_data <- generate_cascade_data(seed = 42)
@@ -157,20 +133,12 @@ network_data <- generate_cascade_data(seed = 42)
 # 2. Run the cascade analysis
 result <- analyze_cascade(network_data)
 
-# 3. Inspect the Global Balance Score (Sd)
+# 3. Inspect the Global Balance Score (Sc)
 # A high score (0.8+) implies influence is well-distributed across layers
 print(result$cascade_score)
-#> [1] 0.6595395
 
 # 4. View the Layer Summary
 # Check if "Knitting" is high in Layer 1 vs "Reaching" in Layer 3
 print(result$summary)
-#> # A tibble: 3 × 9
-#>   layer count gamma layer_knitting layer_bridging layer_channeling
-#>   <dbl> <int> <dbl>          <dbl>          <dbl>            <dbl>
-#> 1     1     3  0.9           0.802          0.823           0.796 
-#> 2     2     3  0.5           0.783          0.610           0.387 
-#> 3     3     7  0.45          0.365          0               0.0515
-#> # ℹ 3 more variables: layer_reaching <dbl>, layer_score <dbl>,
-#> #   layer_number <chr>
+} # }
 ```

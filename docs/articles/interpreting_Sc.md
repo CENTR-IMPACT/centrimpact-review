@@ -68,8 +68,8 @@ information and power can spread:
 **What it measures**: People who connect different groups that wouldn’t
 otherwise interact much
 
-**Social network metrics**: Cross-clique centrality + Betweenness
-centrality
+**Social network metrics**: Structural holes (constraint) + Degree
+centrality on the inter-layer graph
 
 **Why it matters**: Without bridge builders, information stays siloed
 within specific communities or sectors. Bridges enable knowledge to
@@ -91,8 +91,8 @@ Information doesn’t cross demographic or geographic boundaries
 **What it measures**: People who serve as key gateways or bottlenecks
 for information
 
-**Social network metrics**: Communicability betweenness + Flow
-betweenness
+**Social network metrics**: PageRank (local flow) + Harmonic centrality
+(global transmission) on the inter-layer graph
 
 **Why it matters**: Channelers control whether and how quickly
 information spreads. They can either accelerate sharing or become
@@ -181,10 +181,11 @@ cascade_data <- generate_cascade_data(seed = 36)
 
 # Analyze cascade effects
 cascade_results <- analyze_cascade(cascade_data)
+#> Running full exact analysis (~356 expected edges).
 
 # View overall score
 print(cascade_results$cascade_score)
-#> [1] 0.6493745
+#> [1] 0.6689556
 ```
 
 ### What Sc = 0.65 Tells Us
@@ -201,10 +202,10 @@ Now let’s examine where the barriers lie:
 print(cascade_results$summary)
 #> # A tibble: 3 × 9
 #>   layer count gamma layer_knitting layer_bridging layer_channeling
-#>   <dbl> <int> <dbl>          <dbl>          <dbl>            <dbl>
-#> 1     1     7  0.9           0.934         0.755             0.634
-#> 2     2    15  0.5           0.216         0.425             0.290
-#> 3     3    20  0.45          0.346         0.0797            0.145
+#>   <int> <int> <dbl>          <dbl>          <dbl>            <dbl>
+#> 1     1    10  0.9           0.462         0.866             0.768
+#> 2     2    40  0.5           0.311         0.671             0.525
+#> 3     3    80  0.45          0.304         0.0214            0.117
 #> # ℹ 3 more variables: layer_reaching <dbl>, layer_score <dbl>,
 #> #   layer_number <chr>
 ```
@@ -419,10 +420,10 @@ The number of people at each degree provides important context:
 cascade_results$summary[, c("layer", "count")]
 #> # A tibble: 3 × 2
 #>   layer count
-#>   <dbl> <int>
-#> 1     1     7
-#> 2     2    15
-#> 3     3    20
+#>   <int> <int>
+#> 1     1    10
+#> 2     2    40
+#> 3     3    80
 ```
 
 ### Interpreting Network Size
@@ -448,7 +449,7 @@ relationships.
 ``` r
 # View topology score
 print(cascade_results$topology_score)
-#> [1] 0.180723
+#> [1] 0.2310191
 ```
 
 The topology score (0.18 in this example) reflects the overall network

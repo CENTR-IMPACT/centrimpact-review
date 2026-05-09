@@ -74,6 +74,7 @@ Transformation*. CUMU.
 # 1. Generate and analyze data
 data <- generate_cascade_data()
 results <- analyze_cascade(data)
+#> Running full exact analysis (~663 expected edges).
 
 # 2. Create the default visualization
 p <- visualize_cascade(results)

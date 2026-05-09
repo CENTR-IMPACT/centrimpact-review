@@ -1,9 +1,10 @@
 # centr\*impact
 
-[![Lifecycle:
-stable](https://img.shields.io/badge/lifecycle-stable-636b2f?style=flat-square&logo=lifecycle)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![License:
 MIT](https://img.shields.io/badge/License-MIT-3F5E78?style=flat-square&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
+[![R-CMD-check](https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml)
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-636b2f?style=flat-square&logo=lifecycle)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 
 ## Overview
 

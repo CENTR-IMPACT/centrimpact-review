@@ -2,8 +2,11 @@ url: https://centr-impact.github.io/centrimpact-review/
 
 template:
   bootstrap: 5
-  bootswatch: flatly
   mathjax: true
+  includes:
+    in_header: |
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   bslib:
     # Primary brand colors - refined palette
@@ -17,9 +20,12 @@ template:
     dark: "#4E342E"           # Espresso brown
 
     # Typography - clean and modern
-    base_font: {google: "Inter"}
-    heading_font: {google: "Work Sans"}
-    code_font: {google: "Fira Code"}
+    base_font:
+      google: "Alegreya Sans"
+    heading_font:
+      google: "Alegreya"
+    code_font:
+      google: "DM Mono"
 
     # Page styling
     bg: "#FFFFFF"                    # White background
@@ -98,6 +104,17 @@ reference:
     desc: "Create publication-ready visualizations"
     contents:
     - starts_with("visualize_")
+
+  - title: "Data Loading"
+    desc: "Load and clean CEnTR*IMPACT survey exports from Google Forms or Qualtrics"
+    contents:
+    - load_survey_data
+
+  - title: "Pipeline Functions"
+    desc: "Lower-level network construction and analysis called internally by analyze_cascade()"
+    contents:
+    - build_network
+    - calculate_cascade
 
 footer:
   structure:

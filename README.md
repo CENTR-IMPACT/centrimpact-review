@@ -1,11 +1,10 @@
 # centr*impact
 
 <p align="center" style="clear: both;">
-  [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-636b2f?style=flat-square&logo=lifecycle)](https://lifecycle.r-lib.org/articles/stages.html#stable)
-  [![License: MIT](https://img.shields.io/badge/License-MIT-3F5E78?style=flat-square&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
-<!-- badges: start -->
-  [![R-CMD-check](https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml)
-  <!-- badges: end -->
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-3F5E78?style=flat-square&logo=opensourceinitiative&logoColor=white" alt="License: MIT"></a>
+  <a href="https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml"><img src="https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a>
+  <!--<a href="https://app.codecov.io/gh/CENTR-IMPACT/centrimpact-review"><img src="https://codecov.io/gh/CENTR-IMPACT/centrimpact-review/graph/badge.svg" alt="Codecov"></a>-->
+  <a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="https://img.shields.io/badge/lifecycle-stable-636b2f?style=flat-square&logo=lifecycle" alt="Lifecycle: stable"></a>
 </p>
 
 ## Overview
@@ -147,4 +146,3 @@ Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and Transformative Resear
 Wallerstein, N., & Duran, B. (2010). Community-Based Participatory Research Contributions to Intervention Research: The Intersection of Science and Practice to Improve Health Equity. *American Journal of Public Health*, 100(S1), S40–S46. 10.2105/AJPH.2009.184036
 
 Wallerstein, N., et al. (2020). Engage for Equity: A Long-Term Study of Community-Based Participatory Research and Community-Engaged Research Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390. 10.1177/1090198119897075
-
