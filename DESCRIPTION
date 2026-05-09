@@ -20,6 +20,7 @@ Depends:
     R (>= 4.0.0)
 Imports: 
     dplyr,
+    expm,
     ggforce,
     ggplot2 (>= 3.5.0),
     ggrepel,
@@ -27,14 +28,22 @@ Imports:
     igraph,
     irr,
     psych,
+    purrr,
+    readr,
     scales,
     sna,
     stats,
+    stringr,
     tidyr,
     utils
 Suggests:
-    testthat (>= 3.0.0)
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
 URL: https://github.com/centr-impact/centrimpact-review, 
      https://centr-impact.github.io/centrimpact-review/
 BugReports: https://github.com/CENTR-IMPACT/centrimpact-review/issues
 Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+Config/testthat/edition: 3

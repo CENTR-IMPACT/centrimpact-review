@@ -1,0 +1,448 @@
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200..700;1,200..700&family=Inter:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+/* Base styling */
+body {
+  color: #4A4A4A;
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Logo display */
+.navbar-brand img {
+  max-height: 70px;
+  padding: 5px 10px;
+  transition: transform 0.2s ease;
+}
+
+.navbar-brand img:hover {
+  transform: scale(1.05);
+}
+
+/* Brand name in navbar - use deep red */
+.navbar-brand {
+  color: #990000 !important;
+  font-weight: 600;
+}
+
+.navbar-brand:hover {
+  color: #A64B42 !important;
+}
+
+/* Headers - sophisticated and readable */
+h1, h2, h3, h4, h5, h6 {
+  color: #4E342E;
+  font-family: 'Work Sans', sans-serif;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+h1 {
+  padding-bottom: 0.5em;
+}
+
+h2 {
+  border-bottom: 1px solid #8e838066;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+/* Code blocks - clean and modern */
+div.sourceCode {
+  background-color: #E8D8C3;
+  border: none;
+  border-left: 4px solid #3F5E78;
+  border-radius: 6px;
+  padding: 1em;
+  margin: 1.5em 0;
+  overflow-x: auto;
+}
+
+pre.sourceCode {
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+pre {
+  background-color: #E8D8C3;
+  border: 1px solid #8e8380;
+  color: #4A4A4A;
+  border-radius: 6px;
+  padding: 0.5em;
+}
+
+pre code {
+  background-color: transparent;
+  padding: 0;
+}
+
+code {
+  background-color: #E8D8C3;
+  color: #3F5E78;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.9em;
+}
+
+/* Syntax highlighting colors matching your palette */
+code span.at { color: #3F5E78; } /* Attribute */
+code span.bn { color: #636b2f; } /* BaseN */
+code span.bu { color: #4E342E; } /* Built-in */
+code span.cf { color: #3B6B35; font-weight: 600; } /* Control flow */
+code span.ch { color: #A64B42; } /* Char */
+code span.cn { color: #636b2f; } /* Constant */
+code span.co { color: #6b7894; font-style: italic; } /* Comment */
+code span.cv { color: #6b7894; font-style: italic; } /* CommentVar */
+code span.do { color: #6b7894; font-style: italic; } /* Documentation */
+code span.dt { color: #3F5E78; font-weight: 600; } /* DataType */
+code span.dv { color: #636b2f; } /* DecVal */
+code span.er { color: #A64B42; font-weight: 600; } /* Error */
+code span.ex { color: #4E342E; } /* Extension */
+code span.fl { color: #636b2f; } /* Float */
+code span.fu { color: #3F5E78; font-weight: 600; } /* Function */
+code span.im { color: #3B6B35; } /* Import */
+code span.in { color: #6b7894; font-style: italic; } /* Information */
+code span.kw { color: #3B6B35; font-weight: 600; } /* Keyword */
+code span.op { color: #4A4A4A; } /* Operator */
+code span.ot { color: #3F5E78; } /* Other */
+code span.pp { color: #E18B4E; } /* Preprocessor */
+code span.sc { color: #A64B42; } /* SpecialChar */
+code span.ss { color: #A64B42; } /* SpecialString */
+code span.st { color: #A64B42; } /* String */
+code span.va { color: #4E342E; } /* Variable */
+code span.vs { color: #A64B42; } /* VerbatimString */
+code span.wa { color: #E18B4E; font-style: italic; } /* Warning */
+
+/* Links - sophisticated blue with smooth transitions */
+a {
+  color: #3F5E78;
+  text-decoration: none;
+  transition: color 0.2s ease, border-bottom 0.2s ease;
+  border-bottom: 1px solid transparent;
+}
+
+a:hover {
+  color: #1E325C;
+  border-bottom: 1px solid #1E325C;
+}
+
+/* Navigation */
+.navbar {
+  background-color: #E8D8C3;
+  border-bottom: 2px solid #8e8380;
+}
+
+.navbar-nav .nav-link {
+  color: #4E342E;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #3F5E78;
+}
+
+.navbar-nav .nav-link.active {
+  color: #990000;
+  font-weight: 600;
+}
+
+/* Cards - refined elevation */
+.card {
+  border: 1px solid #8e8380;
+  background-color: #E8D8C3;
+  box-shadow: 0 2px 8px rgba(78, 52, 46, 0.12);
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(78, 52, 46, 0.18);
+}
+
+.card-header {
+  background-color: #F0E5D7;
+  border-bottom: 2px solid #8e8380;
+  color: #4E342E;
+  font-weight: 600;
+  font-family: 'Work Sans', sans-serif;
+}
+
+.card-body {
+  background-color: #E8D8C3;
+}
+
+/* Buttons - refined with good contrast */
+.btn-primary {
+  background-color: #3F5E78;
+  border-color: #3F5E78;
+  color: #F2ECD7;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #1E325C;
+  border-color: #1E325C;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(30, 50, 92, 0.2);
+}
+
+.btn-secondary {
+  background-color: #3B6B35;
+  border-color: #3B6B35;
+  color: #F2ECD7;
+  font-weight: 500;
+}
+
+.btn-secondary:hover {
+  background-color: #4E342E;
+  border-color: #4E342E;
+}
+
+/* Tables - clean and professional */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid #8e8380;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+thead {
+  background-color: #E8D8C3;
+  color: #4E342E;
+  font-weight: 600;
+}
+
+thead th {
+  border-bottom: 2px solid #8e8380;
+  padding: 12px;
+}
+
+tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+tbody tr:hover {
+  background-color: #F0E5D7;
+}
+
+tbody td {
+  border-bottom: 1px solid #8e8380;
+  padding: 10px 12px;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Function reference - refined styling */
+.ref-index th {
+  background-color: #E8D8C3;
+  color: #4E342E;
+  font-weight: 600;
+  border-bottom: 2px solid #8e8380;
+  padding: 12px;
+}
+
+.ref-index td {
+  border-bottom: 1px solid #8e8380;
+  padding: 10px 12px;
+}
+
+.ref-index tr:hover {
+  background-color: #F0E5D7;
+}
+
+/* Reference arguments */
+.ref-arguments th {
+  background-color: #F0E5D7;
+  color: #3F5E78;
+  font-weight: 600;
+}
+
+/* Tabs - sophisticated navigation */
+.nav-tabs {
+  border-bottom: 2px solid #8e8380;
+}
+
+.nav-tabs .nav-link {
+  color: #4E342E;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #3F5E78;
+  background-color: #F0E5D7;
+  border-color: #8e8380 #8e8380 transparent;
+}
+
+.nav-tabs .nav-link.active {
+  color: #4E342E;
+  background-color: #FFFFFF;
+  border-color: #8e8380 #8e8380 transparent;
+  font-weight: 600;
+}
+
+/* Footer - refined and professional */
+footer {
+  background-color: #f0e5d7;
+  color: #4A4A4A;
+  margin-top: 2em;
+  padding: 24px;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+footer a {
+  color: #3F5E78;
+}
+
+footer a:hover {
+  color: #1E325C;
+}
+
+/* Sidebar - refined card style */
+.sidebar {
+  background-color: #E8D8C3;
+  border-left: 3px solid #3F5E78;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(78, 52, 46, 0.1);
+}
+
+/* Badges and labels */
+.badge {
+  background-color: #3F5E78;
+  color: #F2ECD7;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Alert boxes - refined with your palette */
+.alert {
+  border-radius: 6px;
+  border-width: 1px;
+  padding: 16px;
+}
+
+.alert-info {
+  background-color: #8c99a7;
+  border-color: #6b7894;
+  color: #1E325C;
+}
+
+.alert-success {
+  background-color: #8ba086;
+  border-color: #636b2f;
+  color: #2A4A28;
+}
+
+.alert-warning {
+  background-color: #f3d1b8;
+  border-color: #E18B4E;
+  color: #8B4A2A;
+}
+
+.alert-danger {
+  background-color: #bd908b;
+  border-color: #A64B42;
+  color: #6B2E2A;
+}
+
+/* Blockquotes - sophisticated accent */
+blockquote {
+  border-left: 4px solid #3B6B35;
+  background-color: #E8D8C3;
+  padding: 16px 20px;
+  margin: 24px 0;
+  font-style: italic;
+  color: #4A4A4A;
+}
+
+/* Search box */
+.algolia-autocomplete .aa-input {
+  border: 2px solid #8e8380;
+  background-color: #FFFFFF;
+  border-radius: 6px;
+  padding: 8px 12px;
+  transition: border-color 0.2s ease;
+}
+
+.algolia-autocomplete .aa-input:focus {
+  border-color: #3F5E78;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(63, 94, 120, 0.1);
+}
+
+/* Pagination */
+.pagination .page-link {
+  color: #3F5E78;
+  background-color: #FFFFFF;
+  border-color: #8e8380;
+}
+
+.pagination .page-link:hover {
+  color: #1E325C;
+  background-color: #F0E5D7;
+  border-color: #8e8380;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #3F5E78;
+  border-color: #3F5E78;
+  color: #F2ECD7;
+}
+
+/* Focus states for accessibility */
+a:focus,
+button:focus,
+input:focus,
+select:focus,
+textarea:focus {
+  outline: 2px solid #3F5E78;
+  outline-offset: 2px;
+}
+
+/* Remove line that appears with page title */
+.page-header {
+  border-bottom: none !important;
+}
+
+/* Also remove any hr elements after h1 */
+h1 + hr {
+  display: none;
+}
+
+/* Remove default title underlines */
+.title {
+  border-bottom: none !important;
+}
+
+/* Ensure no borders on title sections */
+header h1,
+.page-title h1,
+section.page-header h1 {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* Remove horizontal rules in header area */
+header hr,
+.page-header hr {
+  display: none;
+}

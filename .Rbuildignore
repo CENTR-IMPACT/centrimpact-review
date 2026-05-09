@@ -4,3 +4,5 @@
 ^pkgdown$
 ^LICENSE\.md$
 ^CITATION\.cff$
+^\.Rproj\.user$
+^\.github$

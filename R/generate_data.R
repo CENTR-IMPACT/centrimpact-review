@@ -49,125 +49,68 @@ generate_alignment_data <- function(seed = Sys.time()) {
   return(alignment_df)
 }
 
-#' Generate Cascade Data
+#' Generate Cascade Survey Parameters
 #'
 #' @description
-#' Generates synthetic network data to simulate a multi-layered network
-#' showing how impact diffuses from primary agents (Layer 1) to secondary (Layer 2) and tertiary (Layer 3) actors.
+#' Generates a synthetic one-row data frame of cascade survey parameters,
+#' suitable for passing directly to \code{analyze_cascade()}. The parameters
+#' represent a plausible set of cascade network inputs: Layer 1 team size
+#' (split into two types), Layer 2 reach per type, Layer 3 reach, and
+#' probabilistic cross-connection rates for each layer.
 #'
 #' @details
-#' This function constructs a directed graph structure (represented as an edge list) with three distinct layers.
-#' It uses an optimized, vectorized approach to generate connections based on probabilistic rules defined
-#' in the CEnTR*IMPACT framework.
+#' The returned data frame has the same column schema as the \code{cascade}
+#' sub-frame produced by \code{load_survey_data()}, so it can be used as a
+#' drop-in replacement for testing and examples without needing a real survey
+#' file.
 #'
-#' \strong{Network Logic:}
+#' \strong{Parameter ranges:}
 #' \itemize{
-#'   \item \strong{Layer 1:} A fully connected clique of primary agents (3-10 nodes).
-#'   \item \strong{Layer 2:} Children of Layer 1 (1-3 children per parent). 36% chance of internal connections.
-#'   \item \strong{Layer 3:} Children of Layer 2 (parents selected with 72% probability). 10% chance of internal connections.
+#'   \item \code{cascade_d1_people_1_1}: Layer 1 Type 1 count (2--6).
+#'   \item \code{cascade_d1_people_2_1}: Layer 1 Type 2 count (2--6).
+#'   \item \code{cascade_d2_people_1_1}: Layer 2 children per Type 1 parent (1--4).
+#'   \item \code{cascade_d2_people_2_1}: Layer 2 children per Type 2 parent (1--4).
+#'   \item \code{cascade_d2_stats_1}: L2-L2 cross-connection probability (0.05--0.40).
+#'   \item \code{cascade_d2_stats_2}: L2->L1 back-edge probability (0.05--0.30).
+#'   \item \code{cascade_d3_people}: Layer 3 children per Layer 2 parent (1--4).
+#'   \item \code{cascade_d3_stats_1}: L3-L3 cross-connection probability (0.02--0.20).
+#'   \item \code{cascade_d3_stats_2}: L3->L2 back-edge probability (0.02--0.20).
 #' }
 #'
-#' @param seed Integer or POSIXct. The seed for random number generation. Defaults to \code{Sys.time()}.
+#' @param seed Integer or POSIXct. The seed for random number generation.
+#'   Defaults to \code{Sys.time()}.
 #'
-#' @return A data frame representing the edge list with columns: \code{from}, \code{to}, and \code{layer}.
+#' @return A one-row data frame with columns matching the \code{cascade_d*}
+#'   survey schema consumed by \code{analyze_cascade()}.
+#'
+#' @seealso \code{\link{analyze_cascade}}, \code{\link{load_survey_data}}
 #'
 #' @references
-#' Price, J. F. (2024). \emph{CEnTR*IMPACT: Community Engaged and Transformative Research – Inclusive Measurement of Projects & Community Transformation} (CUMU-Collaboratory Fellowship Report). Coalition of Urban and Metropolitan Universities.
+#' Price, J. F. (2024). \emph{CEnTR*IMPACT: Community Engaged and Transformative
+#' Research – Inclusive Measurement of Projects & Community Transformation}
+#' (CUMU-Collaboratory Fellowship Report). Coalition of Urban and Metropolitan
+#' Universities.
+#'
+#' @examples
+#' params <- generate_cascade_data(seed = 42)
+#' result <- analyze_cascade(params)
+#' print(result$cascade_score)
 #'
 #' @export
 generate_cascade_data <- function(seed = Sys.time()) {
   set.seed(as.integer(seed))
 
-  # --- Helper Function: Internal Connections ---
-  # vectorizes the logic for connecting agents within the same layer
-  get_internal_edges <- function(ids, max_pct, layer_val) {
-    n <- length(ids)
-    if (n < 2) return(NULL)
-
-    # Total possible unique pairs
-    max_possible <- (n * (n - 1)) / 2
-
-    # Calculate limit based on percentage
-    limit <- floor(max_possible * max_pct)
-
-    # Sample how many connections we will actually make
-    n_edges <- sample(0:limit, 1)
-
-    if (n_edges == 0) return(NULL)
-
-    # Generate all pairs (combn output is always sorted: row1 < row2)
-    pairs <- combn(ids, 2)
-
-    # Sample specific columns from the pairs matrix
-    selected_idx <- sample(ncol(pairs), n_edges)
-
-    data.frame(
-      from = pairs[1, selected_idx],
-      to   = pairs[2, selected_idx],
-      layer = layer_val
-    )
-  }
-
-  # --- Layer 1 Generation ---
-  n_l1 <- sample(3:10, 1)
-  ids_l1 <- 1:n_l1
-  last_id <- n_l1
-
-  # Layer 1 Internal: Connect all (Clique)
-  pairs_l1 <- combn(ids_l1, 2)
-  edges_l1_int <- data.frame(from = pairs_l1[1,], to = pairs_l1[2,], layer = 1)
-
-  # --- Layer 2 Generation ---
-  # Vectorized: Determine children count for ALL L1 agents at once
-  n_children_l1 <- sample(1:3, n_l1, replace = TRUE)
-  n_l2 <- sum(n_children_l1)
-
-  # Assign IDs
-  ids_l2 <- (last_id + 1):(last_id + n_l2)
-  last_id <- last_id + n_l2
-
-  # Vertical Connections (L1 -> L2)
-  # rep(ids_l1, n_children_l1) repeats the parent ID for each of its children
-  edges_l1_l2 <- data.frame(
-    from  = rep(ids_l1, n_children_l1),
-    to    = ids_l2,
-    layer = 2
+  data.frame(
+    cascade_d1_people_1_1 = sample(2:6, 1),
+    cascade_d1_people_2_1 = sample(2:6, 1),
+    cascade_d2_people_1_1 = sample(1:4, 1),
+    cascade_d2_people_2_1 = sample(1:4, 1),
+    cascade_d2_stats_1    = round(runif(1, 0.05, 0.40), 2),
+    cascade_d2_stats_2    = round(runif(1, 0.05, 0.30), 2),
+    cascade_d3_people     = sample(1:4, 1),
+    cascade_d3_stats_1    = round(runif(1, 0.02, 0.20), 2),
+    cascade_d3_stats_2    = round(runif(1, 0.02, 0.20), 2)
   )
-
-  # Layer 2 Internal (36% limit)
-  edges_l2_int <- get_internal_edges(ids_l2, 0.36, 2)
-
-  # --- Layer 3 Generation ---
-  # Vectorized: Filter parents (72% chance)
-  # We create a boolean mask for all L2 agents
-  is_parent <- runif(n_l2) <= 0.72
-  parents_l2 <- ids_l2[is_parent]
-
-  edges_l2_l3 <- NULL
-  edges_l3_int <- NULL
-
-  if (length(parents_l2) > 0) {
-    # Determine children for the surviving parents
-    n_children_l2 <- sample(1:3, length(parents_l2), replace = TRUE)
-    n_l3 <- sum(n_children_l2)
-
-    ids_l3 <- (last_id + 1):(last_id + n_l3)
-
-    # Vertical Connections (L2 -> L3)
-    edges_l2_l3 <- data.frame(
-      from  = rep(parents_l2, n_children_l2),
-      to    = ids_l3,
-      layer = 3
-    )
-
-    # Layer 3 Internal (10% limit)
-    edges_l3_int <- get_internal_edges(ids_l3, 0.10, 3)
-  }
-
-  # --- Final Assembly ---
-  final_df <- rbind(edges_l1_int, edges_l1_l2, edges_l2_int, edges_l2_l3, edges_l3_int)
-
-  return(final_df)
 }
 
 #' Generate Project Dynamics Data

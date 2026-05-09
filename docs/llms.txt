@@ -1,4 +1,9 @@
-# centrimpact ![CEnTR\*IMPACT Logo](reference/figures/centr-impact-logo.png)
+# centr\*impact
+
+[![Lifecycle:
+stable](https://img.shields.io/badge/lifecycle-stable-636b2f?style=flat-square&logo=lifecycle)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+[![License:
+MIT](https://img.shields.io/badge/License-MIT-3F5E78?style=flat-square&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
 
 ## Overview
 
@@ -14,11 +19,11 @@ Based on the CENTR\*IMPACT framework, this package quantifies the
 following critical concepts in community engaged research:
 
 1.  Alignment: The shared vision between researchers and partners
-    (\\S_a\\).
+    ($`S_a`$).
 2.  Cascade Effects: The ripple effect of work from direct participants
-    to the third degree of separation (\\S_c\\).
+    to the third degree of separation ($`S_c`$).
 3.  Dynamics: Ways in which the project is carried out modeled on the
-    CBPR framework (\\S_d\\).
+    CBPR framework ($`S_d`$).
 4.  Indicators: “Traditional” markers of academic productivity, such as
     individuals served, number of outputs, etc.
 
@@ -38,7 +43,7 @@ devtools::install_github("CENTR-IMPACT/centrimpact-review")
 
 ### Project Alignment Score
 
-The Alignment Score (\\S_a\\) quantifies the degree of consensus between
+The Alignment Score ($`S_a`$) quantifies the degree of consensus between
 researchers and partners across key project areas such as Goals, Values,
 Roles, and Resources.
 
@@ -63,7 +68,7 @@ plot_abacus <- visualize_abacus(alignment_results)
 
 ### Cascade Effects Score
 
-The Cascade Effects Score (\\S_c\\) quantifies the degree to which
+The Cascade Effects Score ($`S_c`$) quantifies the degree to which
 information and power is distributed from the core participants across
 three degrees. This analysis is based on social network analysis
 principles.
@@ -86,7 +91,7 @@ plot_cascade <- visualize_cascade(cascade_results)
 
 ### Project Dynamics Score
 
-The Project Dynamics Score (\\S_d\\) quantifies the degree to which the
+The Project Dynamics Score ($`S_d`$) quantifies the degree to which the
 various aspects of a community engaged research project as outlined by
 the Community Based Participatory Research framework (Wallerstein &
 Duran, 2010; Wallerstein et al., 2020).
@@ -169,14 +174,10 @@ Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390.
 
 # Package index
 
-## All functions
+## Data Generation
 
-- [`analyze_alignment()`](https://centr-impact.github.io/centrimpact-review/reference/analyze_alignment.md)
-  : Calculate Alignment Scores
-- [`analyze_cascade()`](https://centr-impact.github.io/centrimpact-review/reference/analyze_cascade.md)
-  : Analyze Project Cascade Effects
-- [`analyze_dynamics()`](https://centr-impact.github.io/centrimpact-review/reference/analyze_dynamics.md)
-  : Analyze Project Dynamics
+Generate example datasets for testing and demonstration
+
 - [`generate_alignment_data()`](https://centr-impact.github.io/centrimpact-review/reference/generate_alignment_data.md)
   : Generate Alignment Data
 - [`generate_cascade_data()`](https://centr-impact.github.io/centrimpact-review/reference/generate_cascade_data.md)
@@ -185,6 +186,22 @@ Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390.
   : Generate Project Dynamics Data
 - [`generate_indicators_data()`](https://centr-impact.github.io/centrimpact-review/reference/generate_indicators_data.md)
   : Generate Indicators Data
+
+## Analysis Functions
+
+Compute alignment, cascade, dynamics, and indicator scores
+
+- [`analyze_alignment()`](https://centr-impact.github.io/centrimpact-review/reference/analyze_alignment.md)
+  : Calculate Alignment Scores
+- [`analyze_cascade()`](https://centr-impact.github.io/centrimpact-review/reference/analyze_cascade.md)
+  : Analyze Project Cascade Effects
+- [`analyze_dynamics()`](https://centr-impact.github.io/centrimpact-review/reference/analyze_dynamics.md)
+  : Analyze Project Dynamics
+
+## Visualization Functions
+
+Create publication-ready visualizations
+
 - [`visualize_abacus()`](https://centr-impact.github.io/centrimpact-review/reference/visualize_abacus.md)
   : Visualize Researcher-Partner Alignment (Abacus Plot)
 - [`visualize_alignment()`](https://centr-impact.github.io/centrimpact-review/reference/visualize_alignment.md)
@@ -196,3 +213,15 @@ Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390.
 - [`visualize_indicators()`](https://centr-impact.github.io/centrimpact-review/reference/visualize_indicators.md)
   : Visualize Project Indicators
 
+# Articles
+
+### All vignettes
+
+- [Getting Started with
+  centrimpact](https://centr-impact.github.io/centrimpact-review/articles/getting-started.md):
+- [Interpreting Alignment
+  Scores](https://centr-impact.github.io/centrimpact-review/articles/interpreting_Sa.md):
+- [Interpreting Cascade Effects
+  Scores](https://centr-impact.github.io/centrimpact-review/articles/interpreting_Sc.md):
+- [Interpreting Project Dynamics
+  Scores](https://centr-impact.github.io/centrimpact-review/articles/interpreting_Sd.md):

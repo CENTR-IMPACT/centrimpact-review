@@ -83,11 +83,3 @@ calculate_gini <- function(category_values) {
   1 - gini
 }
 
-# 2. Helper function to generate non-repeating blocks
-# This function repeats the sampling process 'n_groups' times.
-# Because replace=FALSE, numbers within a single group will never repeat.
-#' @noRd
-get_random_sets <- function(source_set, group_size, n_groups) {
-  # replicate creates a matrix, as.vector flattens it into a single column
-  as.vector(replicate(n_groups, sample(source_set, size = group_size, replace = FALSE)))
-}

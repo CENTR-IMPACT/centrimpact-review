@@ -1,4 +1,12 @@
-# centrimpact <img src="man/figures/centr-impact-logo.png" align="right" height="138" alt="CEnTR*IMPACT Logo" />
+# centr*impact
+
+<p align="center" style="clear: both;">
+  [![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-636b2f?style=flat-square&logo=lifecycle)](https://lifecycle.r-lib.org/articles/stages.html#stable)
+  [![License: MIT](https://img.shields.io/badge/License-MIT-3F5E78?style=flat-square&logo=opensourceinitiative&logoColor=white)](https://opensource.org/licenses/MIT)
+<!-- badges: start -->
+  [![R-CMD-check](https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/CENTR-IMPACT/centrimpact-review/actions/workflows/R-CMD-check.yaml)
+  <!-- badges: end -->
+</p>
 
 ## Overview
 

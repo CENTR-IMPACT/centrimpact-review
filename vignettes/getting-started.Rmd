@@ -1,0 +1,247 @@
+---
+title: "Getting Started with centrimpact"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Getting Started with centrimpact}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 7,
+  fig.height = 5
+)
+```
+
+## Introduction
+
+The `centrimpact` package provides tools for analyzing and visualizing community-engaged research metrics based on the CEnTR*IMPACT framework (Price, 2024). This framework quantifies four critical dimensions of community-engaged research that go beyond traditional academic metrics:
+
+1. **Alignment** - Shared vision between researchers and partners
+2. **Cascade Effects** - Ripple effects across social networks
+3. **Dynamics** - Quality of partnership processes
+4. **Indicators** - Traditional academic productivity markers
+
+This vignette demonstrates the basic workflow for analyzing each dimension and creating publication-ready visualizations.
+
+## Installation
+
+```{r eval = FALSE}
+# Install from GitHub
+devtools::install_github("CENTR-IMPACT/centrimpact-review")
+```
+
+```{r setup}
+library(centrimpact)
+```
+
+## Analyzing Project Alignment
+
+The Alignment Score (Sa) quantifies consensus between researchers and community partners across four key areas: Goals, Values, Roles, and Resources. Higher scores indicate stronger shared vision.
+
+### Generate and Analyze Data
+
+```{r alignment-analysis}
+# Generate example alignment data
+alignment_data <- generate_alignment_data(seed = 36)
+
+# View the structure
+head(alignment_data)
+
+# Analyze alignment
+alignment_results <- analyze_alignment(alignment_data)
+
+# View results
+print(alignment_results)
+```
+
+### Visualize with Slopegraph
+
+The slopegraph shows how researcher and partner ratings compare across domains:
+
+```{r alignment-slopegraph, fig.width = 7, fig.height = 5}
+# Create slopegraph visualization
+plot_slopegraph <- visualize_alignment(alignment_results)
+print(plot_slopegraph)
+```
+
+### Visualize with Abacus Plot
+
+The abacus plot provides an alternative view of alignment patterns:
+
+```{r alignment-abacus, fig.width = 7, fig.height = 5}
+# Create abacus plot
+plot_abacus <- visualize_abacus(alignment_results)
+print(plot_abacus)
+```
+
+## Analyzing Cascade Effects
+
+The Cascade Effects Score (Sc) quantifies how information and power distribute across three degrees of separation from core participants, based on social network analysis principles.
+
+### Generate and Analyze Data
+
+```{r cascade-analysis}
+# Generate example cascade data (returns a one-row survey parameter frame)
+cascade_data <- generate_cascade_data(seed = 36)
+
+# View the structure
+print(cascade_data)
+
+# Analyze cascade effects
+cascade_results <- analyze_cascade(cascade_data)
+
+# View results
+print(cascade_results)
+```
+
+### Visualize with Racetrack Plot
+
+The radial bar chart ("racetrack plot") shows distribution across network degrees:
+
+```{r cascade-plot, fig.width = 7, fig.height = 7}
+# Create cascade visualization
+plot_cascade <- visualize_cascade(cascade_results)
+print(plot_cascade)
+```
+
+## Analyzing Project Dynamics
+
+The Project Dynamics Score (Sd) quantifies how well a project follows Community-Based Participatory Research (CBPR) principles (Wallerstein & Duran, 2010; Wallerstein et al., 2020).
+
+### Generate and Analyze Data
+
+```{r dynamics-analysis}
+# Generate example dynamics data
+dynamics_data <- generate_dynamics_data(seed = 36)
+
+# View the structure
+head(dynamics_data)
+
+# Analyze project dynamics
+dynamics_results <- analyze_dynamics(dynamics_data)
+
+# View results
+print(dynamics_results)
+```
+
+### Visualize with Rose Chart
+
+The rose chart displays dynamics across CBPR dimensions:
+
+```{r dynamics-plot, fig.width = 7, fig.height = 7}
+# Create dynamics visualization
+plot_dynamics <- visualize_dynamics(dynamics_results)
+print(plot_dynamics)
+```
+
+## Visualizing Project Indicators
+
+Project Indicators capture traditional academic metrics. These require no separate analysis function as they represent direct counts.
+
+### Generate and Visualize Data
+
+```{r indicators-plot, fig.width = 7, fig.height = 5}
+# Generate example indicators data
+indicators_data <- generate_indicators_data(seed = 36)
+
+# View the structure
+head(indicators_data)
+
+# Create horizontal bubble chart
+plot_indicators <- visualize_indicators(indicators_data)
+print(plot_indicators)
+```
+
+## Customizing Visualizations
+
+All visualization functions return `ggplot2` objects, allowing for further customization:
+
+```{r customize-example, fig.width = 7, fig.height = 5}
+library(ggplot2)
+
+# Customize alignment plot
+plot_slopegraph +
+  labs(title = "Researcher-Partner Alignment",
+       subtitle = "Community Health Equity Project") +
+  theme_minimal() +
+  theme(plot.title = element_text(face = "bold", size = 14))
+```
+
+## Complete Workflow Example
+
+Here's a complete workflow analyzing all four dimensions for a single project:
+
+```{r complete-workflow, fig.width = 7, fig.height = 5}
+# 1. Alignment
+alignment_data <- generate_alignment_data()
+alignment_results <- analyze_alignment(alignment_data)
+alignment_plot <- visualize_alignment(alignment_results)
+
+# 2. Cascade Effects
+cascade_data <- generate_cascade_data()
+cascade_results <- analyze_cascade(cascade_data)
+cascade_plot <- visualize_cascade(cascade_results)
+
+# 3. Dynamics
+dynamics_data <- generate_dynamics_data()
+dynamics_results <- analyze_dynamics(dynamics_data)
+dynamics_plot <- visualize_dynamics(dynamics_results)
+
+# 4. Indicators
+indicators_data <- generate_indicators_data()
+indicators_plot <- visualize_indicators(indicators_data)
+
+# Display alignment as example
+print(alignment_plot)
+```
+
+## Interpreting Results
+
+### Alignment Scores
+
+- **0.80-1.00**: Strong alignment; shared vision well-established
+- **0.60-0.79**: Moderate alignment; some areas need attention
+- **Below 0.60**: Low alignment; significant discussion needed
+
+### Cascade Scores
+
+Higher scores indicate information and power successfully distributed across network degrees, suggesting sustainable community impact.
+
+### Dynamics Scores
+
+Scores reflect adherence to CBPR principles. Track changes over time to assess partnership development.
+
+### Indicators
+
+Contextualize traditional metrics within alignment, cascade, and dynamics scores for comprehensive impact assessment.
+
+## Preparing Your Own Data
+
+Each analysis function expects data in specific formats. Use the `generate_*_data()` functions as templates:
+
+```{r data-structure}
+# Examine expected structure
+str(generate_alignment_data())
+str(generate_cascade_data())
+str(generate_dynamics_data())
+str(generate_indicators_data())
+```
+
+## Next Steps
+
+- See `?analyze_alignment` for detailed parameter descriptions
+- Explore `?visualize_alignment` for customization options
+- Review individual function documentation for each dimension
+- Consult the CEnTR*IMPACT framework report for theoretical foundations
+
+## References
+
+Price, J. F. (2024). *CEnTR\*IMPACT: Community Engaged and Transformative Research – Inclusive Measurement of Projects & Community Transformation* (CUMU-Collaboratory Fellowship Report). Coalition of Urban and Metropolitan Universities. https://cumuonline.org/wp-content/uploads/2024-CUMU-Collaboratory-Fellowship-Report.pdf
+
+Wallerstein, N., & Duran, B. (2010). Community-Based Participatory Research Contributions to Intervention Research: The Intersection of Science and Practice to Improve Health Equity. *American Journal of Public Health*, 100(S1), S40–S46. https://doi.org/10.2105/AJPH.2009.184036
+
+Wallerstein, N., et al. (2020). Engage for Equity: A Long-Term Study of Community-Based Participatory Research and Community-Engaged Research Practices and Outcomes. *Health Education & Behavior*, 47(3), 380–390. https://doi.org/10.1177/1090198119897075

@@ -6,6 +6,8 @@
 \alias{centrimpact-package}
 \title{centrimpact: Supporting the Analysis and Visualization of Community Engaged Research Metrics}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 The `centrimpact` R package provides a comprehensive toolkit for analyzing and visualizing community engaged research metrics as highlighted in the CEnTR*IMPACT framework. It offers specialized functions for researcher-partner alignment, project dynamics, cascade effects, and creating publication-ready visualizations.
 }
 \seealso{

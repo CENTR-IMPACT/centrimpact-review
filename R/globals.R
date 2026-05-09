@@ -40,5 +40,26 @@ utils::globalVariables(c(
   "domain",
   "dimension_score",
   "domain_score",
-  "layer_score"
+  "layer_score",
+
+  # load_survey_data.R — .load_alignment() tidy-eval column names
+  "Goals",
+  "Outcomes",
+
+  # load_survey_data.R — .load_main() tidy-eval column names
+  "dynamic",
+  "descriptor",
+
+  # load_survey_data.R — .translate_google_headers() bare column references
+  "Timestamp",
+  "dynamics_selection",
+  "indicators_outcomes",
+  "cascade_d2_stats_1",
+  "cascade_d2_stats_2",
+  "cascade_d3_stats_1",
+  "cascade_d3_stats_2",
+
+  # analyze_cascade.R / build_network() — dplyr::tibble() bare column names
+  "from",
+  "to"
 ))

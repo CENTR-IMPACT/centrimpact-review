@@ -2,102 +2,101 @@
 % Please edit documentation in R/analyze_cascade.R
 \name{analyze_cascade}
 \alias{analyze_cascade}
-\title{Analyze Project Cascade Effects}
+\title{Run the Cascade Analysis Pipeline}
 \usage{
-analyze_cascade(network_df, alpha_parameter = 0.9)
+analyze_cascade(
+  cascade_data,
+  max_edges = 2e+06,
+  target_nodes = 500,
+  n_runs = 5,
+  seed = NULL,
+  always_scale = FALSE,
+  keep_runs = FALSE
+)
 }
 \arguments{
-\item{network_df}{A data frame representing the edge list. Required columns:
-\itemize{
-\item \code{from}: Source node identifier.
-\item \code{to}: Target node identifier.
-\item \code{layer}: Integer (1-3). The "degree" of the interaction (1 = Core, 2 = Community, 3 = Distant).
-}}
+\item{cascade_data}{A one-row data frame containing the \code{cascade_*}
+survey columns (people counts and probability parameters). If a multi-row
+data frame is supplied (e.g. directly from \code{generate_cascade_data()}),
+only the first row is used and a warning is emitted.}
 
-\item{alpha_parameter}{Numeric. Damping factor for Alpha Centrality (defaults to 0.9).}
+\item{max_edges}{Maximum expected edge count for exact analysis.
+Default 2e6. Networks with more expected edges are scaled.}
+
+\item{target_nodes}{Target total node count when scaling is applied.
+Default 500. Larger values give more accurate results at higher runtime.}
+
+\item{n_runs}{Number of stochastic runs to average in scaled mode.
+Default 5.}
+
+\item{seed}{Optional integer seed for reproducibility. In scaled
+mode, run \eqn{i} uses \code{seed + i} so runs are independent but
+deterministic.}
+
+\item{always_scale}{Logical. If \code{TRUE}, force scaled analysis even
+when the network fits within \code{max_edges}. Useful for benchmarking.
+Default \code{FALSE}.}
+
+\item{keep_runs}{Logical. If \code{TRUE}, attach all individual
+\code{cascade_analysis} run results to the output as \code{run_results}.
+Default \code{FALSE}.}
 }
 \value{
-An object of class \code{cascade_analysis} containing:
+A list of class \code{"cascade_pipeline"} containing:
 \itemize{
-\item \code{cascade_score}: The global Balance Score (\eqn{S_c}, 0-1).
-\item \code{summary}: A summary table aggregating roles by Layer (Degree).
-\item \code{node_data}: Detailed metrics for every node.
-\item \code{topology_score}: Baseline topological health score.
+\item \code{mode}: \code{"full"} or \code{"scaled"}.
+\item \code{summary}: Mean layer summary table (tibble with
+\code{layer_knitting}, \code{layer_bridging}, \code{layer_channeling},
+\code{layer_reaching}, \code{layer_score}, \code{layer_number}).
+\item \code{summary_sd}: Per-column SD across runs (\code{NULL} in full
+mode).
+\item \code{cascade_score}: Gini-based cascade balance score.
+\item \code{estimated_edges}: Expected edge count before any scaling.
+\item \code{scale_used}: Scale factor applied (\code{1} in full mode).
+\item \code{n_runs}: Number of runs averaged.
+\item \code{node_data}: Per-node metrics (full mode only; \code{NULL}
+in scaled mode -- use \code{keep_runs = TRUE} to access individual
+run node data).
+\item \code{run_results}: Individual run results (only present when
+\code{keep_runs = TRUE}).
 }
 }
 \description{
-Performs a comprehensive analysis of a network's "Cascade" structure to measure
-localized influence. Based on the theory that direct personal influence typically
-extends to "three degrees of impact" (Christakis & Fowler, 2009), this function
-examines potential cascading effects across these layers.
+High-level entry point for cascade analysis. Accepts raw cascade survey
+parameters directly, estimates the expected network size, and automatically
+routes to either a full exact analysis (when the network is tractable) or a
+scaled stochastic analysis (when the network is too large). In scaled mode,
+multiple stochastic runs are averaged to reduce variance from the
+probabilistic edge generation.
 }
 \details{
-\strong{Theoretical Foundation:}
-Unlike general connectivity metrics, this method resembles the work of Long,
-Cunningham, and Braithwaite (2013), examining participants' roles based on the
-structure of the network formed through the research. It assesses how influence
-ripples outward from the core team (Layer 1) to the broader community (Layer 3+).
+\strong{Routing Logic:}
+The expected edge count is estimated analytically from the survey parameters
+without constructing the network. If it falls within \code{max_edges}, a
+single full \code{calculate_cascade(build_network())} call is made. Otherwise,
+the five "people" parameters are scaled down proportionally so that the
+resulting network has approximately \code{target_nodes} total nodes, and
+\code{n_runs} independent runs are averaged.
 
-\strong{Operational Definitions:}
-The function maps Social Network Analysis (SNA) metrics to four key influence roles:
+\strong{Scaling Method:}
+The scale factor \eqn{s} is found by solving the cubic node-count equation
+\deqn{n_1 s + n_2 s^2 + n_3 s^3 = \text{target\_nodes}}
+numerically via \code{uniroot()}, where \eqn{n_1}, \eqn{n_2}, \eqn{n_3}
+are the unscaled node counts per layer. This preserves the L1:L2:L3 ratio
+and avoids the floor-collapse problem that occurs with a fixed multiplier
+when small counts round to zero. Floors of \code{pmax(2, ...)} are applied
+to L1 type counts (so the clique remains meaningful) and \code{pmax(1, ...)}
+to all other counts.
 
-\strong{1. Knitting (Cohesion & Bonding):}
-Measures how well the network strengthens internal bonds within a specific group.
-\itemize{
-\item \emph{Metrics:} Community detection (Walktrap) + Eigenvector Centrality.
-\item \emph{Interpretation:} High scores indicate a tight-knit, resilient core.
-}
-
-\strong{2. Bridging (Connection & Spanning):}
-Measures the ability to connect otherwise disconnected groups (filling "structural holes").
-\itemize{
-\item \emph{Metrics:} Structural Holes (Constraint) + Betweenness Centrality.
-\item \emph{Interpretation:} High scores indicate key "brokers" connecting silos.
-}
-
-\strong{3. Channeling (Flow & Transmission):}
-Measures the efficiency of information flow and resource distribution.
-\itemize{
-\item \emph{Metrics:} Local Betweenness + Alpha Centrality.
-\item \emph{Interpretation:} High scores indicate effective pipelines for moving resources.
-}
-
-\strong{4. Reaching (Access & Inclusion):}
-Measures the extent of the network's periphery and accessibility.
-\itemize{
-\item \emph{Metrics:} Clustering Coefficient + Harmonic Centrality.
-\item \emph{Interpretation:} High scores indicate an inclusive network with reduced barriers.
-}
-
-\strong{The Scoring Process:}
-\enumerate{
-\item \strong{Layer (Degree) Scoring:} For each network layer (degree of separation),
-influence is calculated by combining local cohesion (Knitting + Bridging),
-global flow (Channeling), and peripheral access (Reaching):
-\deqn{s_{\text{layer}} = \gamma(\alpha L + \beta G) + \lambda T}
-where \eqn{L} represents combined Knitting and Bridging scores, \eqn{G} represents
-Channeling score, \eqn{T} represents Reaching score, and weights are:
-\itemize{
-\item \eqn{\alpha = 0.4} (local cohesion weight)
-\item \eqn{\beta = 0.3} (global flow weight)
-\item \eqn{\lambda = 0.3} (peripheral access weight)
-\item \eqn{\gamma} varies by layer: 0.9 (Layer 1), 0.5 (Layer 2), 0.45 (Layer 3)
-}
-\item \strong{Cascade Balance Score:} Calculated based on the equality of layer scores.
-\deqn{S_{c} = 1 - \operatorname{Gini}(\{s_{\text{layer},k}\})}
-where \eqn{\{s_{\text{layer},k}\}} represents the set of all layer influence scores.
-}
-
-\strong{Cascade Balance Interpretation:}
-\itemize{
-\item \eqn{S_c < 0.50}: \strong{Very Low Balance} (Core-dominated)
-\item \eqn{0.50 \le S_c < 0.59}: \strong{Low Balance}
-\item \eqn{0.60 \le S_c < 0.69}: \strong{Moderate Balance}
-\item \eqn{0.70 \le S_c \le 0.79}: \strong{High Balance}
-\item \eqn{S_c \ge 0.80}: \strong{Very High Balance} (Equitable distribution)
-}
+\strong{Why average runs?}
+The probabilistic edges (L2-L2, L3-L3, back-edges) introduce stochastic
+variance. A single scaled run can produce misleading scores when the scaled
+network is small. Averaging \code{n_runs} independent realizations of the
+same scaled parameters yields stable estimates; \code{summary_sd} quantifies
+the remaining run-to-run variance.
 }
 \examples{
+\dontrun{
 # 1. Generate a synthetic 3-layer network
 # This simulates Core (L1) -> Partner (L2) -> Community (L3) flow
 network_data <- generate_cascade_data(seed = 42)
@@ -105,26 +104,22 @@ network_data <- generate_cascade_data(seed = 42)
 # 2. Run the cascade analysis
 result <- analyze_cascade(network_data)
 
-# 3. Inspect the Global Balance Score (Sd)
+# 3. Inspect the Global Balance Score (Sc)
 # A high score (0.8+) implies influence is well-distributed across layers
 print(result$cascade_score)
 
 # 4. View the Layer Summary
 # Check if "Knitting" is high in Layer 1 vs "Reaching" in Layer 3
 print(result$summary)
+}
 
 }
 \references{
-Christakis, N. A., & Fowler, J. H. (2009). \emph{Connected: The Surprising Power of Our Social Networks and How They Shape Our Lives}. Little, Brown Spark.
-
-Haddad, C. N., et al. (2024). \emph{The World Bank's New Inequality Indicator}. World Bank. \doi{10.1596/41687}
-
-Long, J. C., Cunningham, F. C., & Braithwaite, J. (2013). Bridges, brokers and boundary spanners in collaborative networks: a systematic review. \emph{BMC Health Services Research}, 13, 158. \doi{10.1186/1472-6963-13-158}
-
-Price, J. F. (2024). \emph{CEnTR*IMPACT: Community Engaged and Transformative Research – Inclusive Measurement of Projects & Community Transformation}. CUMU.
-
-Wang, H.-Y., et al. (2020). Comparison of Ferguson’s delta and the Gini coefficient used for measuring the inequality of data. \emph{Health and Quality of Life Outcomes}, 18(1), 111.
+Leng, Y., et al. (2018). The rippling effect of social influence via phone
+communication network. In \emph{Complex Spreading Phenomena in Social
+Systems} (pp. 323-333). Springer.
 }
 \seealso{
-\code{\link{generate_cascade_data}} to simulate the network data used in these examples.
+\code{\link{calculate_cascade}} for the underlying network analysis
+function.
 }

@@ -1,8 +1,12 @@
 pandoc: 3.6.3
 pkgdown: 2.2.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2025-12-25T13:39Z
+articles:
+  getting-started: getting-started.html
+  interpreting_Sa: interpreting_Sa.html
+  interpreting_Sc: interpreting_Sc.html
+  interpreting_Sd: interpreting_Sd.html
+last_built: 2025-12-28T20:08Z
 urls:
   reference: https://centr-impact.github.io/centrimpact-review/reference
   article: https://centr-impact.github.io/centrimpact-review/articles
