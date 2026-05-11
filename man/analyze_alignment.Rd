@@ -11,7 +11,10 @@ analyze_alignment(alignment_df)
 \itemize{
 \item \code{role}: Character ('researcher' or 'partner').
 \item \code{alignment}: Character (the factor/category being rated).
-\item \code{rating}: Numeric (the rating provided, typically 0-1).
+\item \code{rating}: Numeric. Ratings on a 1–10 scale (as exported by
+Qualtrics or Google Forms) or already normalised to \eqn{[0, 1]}.
+Values greater than 1 are automatically rescaled to \eqn{[0, 1]}
+using min–max normalisation before any summaries are computed.
 }}
 }
 \value{
